@@ -1,4 +1,4 @@
-package com.example.gdpr.configuration;
+package com.example.gdpr.services;
 
 import java.util.HashMap;
 

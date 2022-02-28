@@ -11,7 +11,7 @@ import org.springframework.vault.core.VaultSysOperations;
 import org.springframework.vault.core.VaultTemplate;
 import org.springframework.vault.support.VaultMount;
 
-import com.example.gdpr.configuration.MongoSecretIntegration;
+import com.example.gdpr.services.MongoSecretIntegration;
 
 @SpringBootApplication
 public class ConsentManagementPlatformApplication {
