@@ -2,11 +2,15 @@ package com.example.gdpr.configuration;
 
 import java.util.HashMap;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.vault.core.VaultSysOperations;
 import org.springframework.vault.core.VaultTemplate;
 import org.springframework.vault.support.VaultMount;
 
+@Service
 public class MongoSecretIntegration {
 	
 	
@@ -20,18 +24,13 @@ public class MongoSecretIntegration {
 	private static final String DATABASE_NAME = "Bankerise" ; 
 	private static final String ROOT_CREDENTIALS = String.format("mongodb://%s:%s@%s:%d/admin?ssl=false", MONGODB_USER,MONGODB_PASS,MONGODB_HOST, MONGODB_PORT);
 	
-	private  VaultSysOperations sysOperations ;
-	
-	
-	
-	public MongoSecretIntegration(VaultTemplate vaultTemplate) {
-		this.sysOperations = vaultTemplate.opsForSys() ; 
-	}
 
 	
-	public void MountDataBaseSecretEngine(){
+	
+	public void MountDataBaseSecretEngine(VaultTemplate vaultTemplate){
 		
-	    if (!sysOperations.getMounts().containsKey("mongodb/")) {
+		VaultSysOperations sysOperations = vaultTemplate.opsForSys();
+		if (sysOperations != null && !sysOperations.getMounts().containsKey("mongodb/")) {
 		      sysOperations.mount("mongodb", VaultMount.create("database"));
 		    }
 	}
@@ -43,7 +42,6 @@ public class MongoSecretIntegration {
     //Be careful you may encounter Read Time Out Exception from Socket if both containers are not in the same network  
 	
 	public void EnableVaultMongoConnection(VaultTemplate vaultTemplate) {
-
 	    HashMap<String, String> secretEngineMap = new HashMap<String, String>() ;  
 	    secretEngineMap.put("plugin_name", BACKEND_PLUGIN_NAME) ; 
 	    secretEngineMap.put("connection_url", ROOT_CREDENTIALS) ;
