@@ -11,5 +11,6 @@ systems** made by Mouna Rhahla, Sahar Allegue and Takoua Abdellatif in **Proxym-
 -p 8200:8200 vault``
 
 **Note** : - For more information about building Vault image  visit the official Docker image on Docker Hub 
+
            - Specifying the container network is certain to assure the communication between other containers  within the Application 
    
