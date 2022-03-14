@@ -45,6 +45,8 @@ public class ConsentManagementPlatformApplication {
 	public void run(){
 		mongoSecrets.MountDataBaseSecretEngine(vaultTemplate);
 		mongoSecrets.EnableVaultMongoConnection(vaultTemplate);	
+		
+		mongoSecrets.CreateRole(vaultTemplate,"test22");
 	}
 	
 
