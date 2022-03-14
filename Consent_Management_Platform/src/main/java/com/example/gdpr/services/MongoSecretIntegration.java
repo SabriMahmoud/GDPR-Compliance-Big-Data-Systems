@@ -1,16 +1,41 @@
 package com.example.gdpr.services;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
-
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpEntity;
+import org.springframework.lang.Nullable;
+import org.apache.catalina.core.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
+import org.springframework.vault.authentication.TokenAuthentication;
+import org.springframework.vault.config.AbstractVaultConfiguration;
+import org.springframework.vault.core.RestOperationsCallback;
+import org.springframework.vault.core.VaultKeyValueOperations;
+import org.springframework.vault.core.VaultKeyValueOperationsSupport.KeyValueBackend;
+import org.springframework.vault.core.VaultOperations;
 import org.springframework.vault.core.VaultSysOperations;
 import org.springframework.vault.core.VaultTemplate;
+import org.springframework.vault.core.lease.SecretLeaseContainer;
+import org.springframework.vault.core.lease.domain.RequestedSecret;
 import org.springframework.vault.support.VaultMount;
+import org.springframework.vault.support.VaultResponse;
+import org.springframework.web.client.RestOperations;
+
+
+
+
+
+
 
 @Service
 public class MongoSecretIntegration {
@@ -34,8 +59,16 @@ public class MongoSecretIntegration {
 	private static final String MAX_TIME_TO_LIVE ="24h" ; 
 	
 	// To Do verify custom statements 
-	private static final String ROLE_STATEMENT = String.format("\"{ \\\"db\\\": \\\"%s\\\", \\\"roles\\\": [{ \\\"role\\\": \\\"readWrite\\\" }, {\\\"role\\\": \\\"read\\\", \\\"db\\\": \\\"foo\\\"}] }\"",DATABASE_NAME) ;  
+	private static final String ROLE_STATEMENT = String.format("\"{ \\\"db\\\": \\\"%s\\\", \\\"roles\\\": [{ \\\"role\\\": \\\"readWrite\\\" }, {\\\"role\\\": \\\"read\\\", \\\"db\\\": \\\"foo\\\"}] }\"",DATABASE_NAME) ;
+	private static final VaultOperations vaultOperations = null;
+	private static final TaskScheduler TaskScheduler = null;  
 	
+	
+	
+	
+	
+
+
 	
 	
 	
@@ -47,6 +80,8 @@ public class MongoSecretIntegration {
 		      sysOperations.mount("mongodb", VaultMount.create("database"));
 		    }
 	}
+	
+	
 	
 	
 	
@@ -84,11 +119,10 @@ public class MongoSecretIntegration {
 		
 		
 		vaultTemplate.write(String.format("%s/roles/%s",BACKEND_ENGINE,roleName),roleMap);
-		
-		
-		
-		
+			
 	}
+	
+
 	
 	
 	

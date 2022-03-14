@@ -1,6 +1,7 @@
 package com.example.gdpr;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -12,6 +13,7 @@ import org.springframework.vault.core.VaultTemplate;
 import org.springframework.vault.support.VaultMount;
 
 import com.example.gdpr.services.MongoSecretIntegration;
+import com.example.gdpr.services.VaultCommunicationService;
 
 @SpringBootApplication
 public class ConsentManagementPlatformApplication {
@@ -22,6 +24,8 @@ public class ConsentManagementPlatformApplication {
 	VaultTemplate vaultTemplate ; 
 	@Autowired
 	MongoSecretIntegration mongoSecrets ; 
+	@Autowired
+	VaultCommunicationService vaultCommunication ; 
 	
 	
 	
@@ -43,10 +47,15 @@ public class ConsentManagementPlatformApplication {
 
 	@PostConstruct 
 	public void run(){
+		
 		mongoSecrets.MountDataBaseSecretEngine(vaultTemplate);
 		mongoSecrets.EnableVaultMongoConnection(vaultTemplate);	
-		
 		mongoSecrets.CreateRole(vaultTemplate,"test22");
+		
+		
+		
+		Map<String,Object> response = vaultCommunication.getDataBaseCredentials(vaultTemplate);
+		System.out.println(response.get("password"));
 	}
 	
 
