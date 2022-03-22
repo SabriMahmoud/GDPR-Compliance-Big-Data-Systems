@@ -8,12 +8,14 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.vault.core.VaultSysOperations;
 import org.springframework.vault.core.VaultTemplate;
 import org.springframework.vault.support.VaultMount;
 
 import com.example.gdpr.services.MongoSecretIntegration;
 import com.example.gdpr.services.VaultCommunicationService;
+import com.mongodb.client.MongoClient;
 
 @SpringBootApplication
 public class ConsentManagementPlatformApplication {
@@ -50,12 +52,18 @@ public class ConsentManagementPlatformApplication {
 		
 		mongoSecrets.MountDataBaseSecretEngine(vaultTemplate);
 		mongoSecrets.EnableVaultMongoConnection(vaultTemplate);	
-		mongoSecrets.CreateRole(vaultTemplate,"test22");
+		//verify error json cannot unmarshall string 
+		mongoSecrets.CreateRole(vaultTemplate,"test");
 		
 		
-		
+		//To do try catch
 		Map<String,Object> response = vaultCommunication.getDataBaseCredentials(vaultTemplate);
+		System.out.println(response.get("username"));
 		System.out.println(response.get("password"));
+		vaultCommunication.createPolicy(vaultTemplate);
+		// verify how to connect to DB after getting the token 
+		vaultCommunication.createTokenAttachedToPolicy(vaultTemplate);
+		
 	}
 	
 
