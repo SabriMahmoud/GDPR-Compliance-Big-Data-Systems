@@ -2,6 +2,9 @@
 This projects aims at implementing Vault as a solution for data protection the research paper **A framework for GDPR compliance in Big Data
 systems** made by Mouna Rhahla, Sahar Allegue and Takoua Abdellatif in **Proxym-Lab** Refer to Documents directory for more information.
 
+**Superviser :** Tarek Sghair 
+
+
 ## Steps to run the project properly 
 - First : start Vault Docker container using this command 
 
