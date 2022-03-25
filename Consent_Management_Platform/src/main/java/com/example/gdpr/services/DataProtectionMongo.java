@@ -1,9 +1,10 @@
 package com.example.gdpr.services;
 
-import org.bson.types.ObjectId;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class DataProtectionMongo {
@@ -13,38 +14,11 @@ public class DataProtectionMongo {
 	//creating a view with mongoTemplate
 	
 	public void test(){
-		mongoTemplate.executeCommand("{create:UsersView , viewOn:Users ,pipline: [\n" + 
-				"   {\n" + 
-				"      $lookup:\n" + 
-				"         {\n" + 
-				"           from: \"usedData\",\n" + 
-				"           let: { id_u: \"$id\",},\n" + 
-				"           pipeline: [\n" + 
-				"              { $match:\n" + 
-				"                 { $expr:\n" + 
-				"                    { $and:\n" + 
-				"                       [\n" + 
-				"                         { $eq: [ \"$id\",  \"$$id_u\" ] }\n" + 
-				"                       ]\n" + 
-				"                    }\n" + 
-				"                 }\n" + 
-				"              }\n" + 
-				"           ],\n" + 
-				"           as: \"same_id\"\n" + 
-				"         }\n" + 
-				"    },   \n" + 
-				"    {\n" + 
-				"      $replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ \"$same_id\", 0 ] }, \"$$ROOT\" ] } }\n" + 
-				"    },\n" + 
-				"    { $project: { same_id: 0 } },\n" + 
-				"    { $match : {\n" + 
-				"        use_data : \"1\"\n" + 
-				"    }}\n" + 
-				"    \n" + 
-				"]}"); 
+		String command = "{create: 'UsersView' , viewOn: 'UserApp' ,pipeline: [{$lookup:{ from: \"usedData\",let: { id_u: \"$id\",},pipeline: [{ $match:{$expr:{ $and:[{ $eq: [ \"$id\",  \"$$id_u\" ] }]}}}],as: \"same_id\"}},{$replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ \"$same_id\", 0 ] }, \"$$ROOT\" ] } }},{ $project: { same_id: 0 } },{ $match : {use_data : \"1\"}}] } " ; 
+		Document parsed_command = Document.parse(command) ; 
+		Document res = mongoTemplate.executeCommand(parsed_command); 
 	}
 	
-
 	
 
 }
