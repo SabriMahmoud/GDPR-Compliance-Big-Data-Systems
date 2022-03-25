@@ -13,6 +13,7 @@ import org.springframework.vault.core.VaultSysOperations;
 import org.springframework.vault.core.VaultTemplate;
 import org.springframework.vault.support.VaultMount;
 
+import com.example.gdpr.services.DataProtectionMongo;
 import com.example.gdpr.services.MongoSecretIntegration;
 import com.example.gdpr.services.VaultCommunicationService;
 import com.mongodb.client.MongoClient;
@@ -28,7 +29,8 @@ public class ConsentManagementPlatformApplication {
 	MongoSecretIntegration mongoSecrets ; 
 	@Autowired
 	VaultCommunicationService vaultCommunication ; 
-	
+	@Autowired
+	DataProtectionMongo protectData ; 
 	
 	
 
@@ -57,12 +59,14 @@ public class ConsentManagementPlatformApplication {
 		
 		
 		//To do try catch
-		Map<String,Object> response = vaultCommunication.getDataBaseCredentials(vaultTemplate);
-		System.out.println(response.get("username"));
-		System.out.println(response.get("password"));
+//		Map<String,Object> response = vaultCommunication.getDataBaseCredentials(vaultTemplate);
+//		System.out.println(response.get("username"));
+//		System.out.println(response.get("password"));
 		vaultCommunication.createPolicy(vaultTemplate);
 		// verify how to connect to DB after getting the token 
 		vaultCommunication.createTokenAttachedToPolicy(vaultTemplate);
+		protectData.test();
+		
 		
 	}
 	
