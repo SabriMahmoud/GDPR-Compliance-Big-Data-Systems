@@ -5,6 +5,17 @@ systems** made by Mouna Rhahla, Sahar Allegue and Takoua Abdellatif in **Proxym-
 **Superviser :** Tarek Sghair 
 
 
+# Project Architecture 
+
+**Admin** : Application admin 
+
+**Clients** : Spring Boot Services 
+
+**MongoDB** : Application Data Base contains users and Application Data 
+
+
+![alt text](https://mktg-content-api-hashicorp.vercel.app/api/assets?product=tutorials&version=main&asset=public%2Fimg%2Fvault%2Fvault-mongodb.png)
+
 ## Steps to run the project properly 
 - First : start Vault Docker container using this command 
 
