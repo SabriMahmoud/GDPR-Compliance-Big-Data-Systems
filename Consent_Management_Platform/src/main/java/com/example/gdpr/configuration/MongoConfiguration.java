@@ -1,11 +1,6 @@
 package com.example.gdpr.configuration;
 
-import java.util.Collection;
-import java.util.Collections;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 
 import com.mongodb.ConnectionString;
@@ -13,30 +8,26 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
-@Configuration
-public class MongoConfiguration extends AbstractMongoClientConfiguration {
+@Configuration(proxyBeanMethods = false)
+public class MongoConfiguration{
+	
+	private String dataBaseName ; 
  
-//	@Autowired
-//	private Environment env;
-//	
-//	private final String host = env.getProperty("spring.data.mongodb.host") ; 
-//	private final String port = env.getProperty("spring.data.mongodb.port") ; 
-//	private final String dataBase =env.getProperty("spring.data.mongodb.database") ;
-//	private final String username = env.getProperty("spring.data.mongodb.username") ; 
-//	private final String password =env.getProperty("spring.data.mongodb.password") ; 
+
     
-	@Override
+	protected void setDataBaseName(String name){
+		dataBaseName = name ; 
+	}
     protected String getDatabaseName() {
-//        return env.getProperty("spring.data.mongodb.database");
+
 		  return "Bankerise" ; 
     }
  
-    @Override
-    public MongoClient mongoClient() {
+    public MongoClient mongoClient(String username, String password) {
     	
 
     	
-        ConnectionString connectionString = new ConnectionString(String.format("mongodb://mdbadmin:hQ97T9JJKZoqnFn2NXE@localhost:27017"));
+        ConnectionString connectionString = new ConnectionString(String.format("mongodb://%s:%s@localhost:27017/%s",username,password,this.getDatabaseName()));
         MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
             .applyConnectionString(connectionString)
             .build();

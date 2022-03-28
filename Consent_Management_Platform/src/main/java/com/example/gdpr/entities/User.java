@@ -15,6 +15,9 @@ public class User {
     private String email ; 
     private String gender ; 
     private String ip_address ;
+    private String credit ; 
+    
+    
 	public ObjectId get_id() {
 		return _id;
 	}
@@ -56,6 +59,12 @@ public class User {
 	}
 	public void setIp_address(String ip_address) {
 		this.ip_address = ip_address;
+	}
+	public String getCredit() {
+		return credit;
+	}
+	public void setCredit(String credit) {
+		this.credit = credit;
 	}
 
 

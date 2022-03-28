@@ -44,7 +44,7 @@ public class VaultCommunicationService {
 	            //To Do get Vault Token from spring.cloud.vault.token 
 	            headers.add("X-Vault-Token",VAULT_TOKEN);
 	            
-	            ResponseEntity<VaultResponse> responseEntity =   restOperations.exchange("/mongodb/creds/test1",HttpMethod.GET, new HttpEntity<Object>(headers), VaultResponse.class); 
+	            ResponseEntity<VaultResponse> responseEntity =   restOperations.exchange("/mongodb/creds/service1",HttpMethod.GET, new HttpEntity<Object>(headers), VaultResponse.class); 
 	           
 	            return responseEntity.getBody() ;
 	            
