@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpEntity;
 import org.springframework.lang.Nullable;
 import org.apache.catalina.core.ApplicationContext;
+import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.TaskScheduler;
@@ -32,6 +33,8 @@ import org.springframework.vault.support.VaultMount;
 import org.springframework.vault.support.VaultResponse;
 import org.springframework.web.client.RestOperations;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
 
 
 
@@ -45,6 +48,7 @@ public class MongoSecretIntegration {
 	private static final int MONGODB_PORT = 27017;
 	//container name 
 	private static final String MONGODB_HOST = "mongodb3";
+	//secure creds
 	private static final String MONGODB_USER = "mdbadmin" ; 
 	private static final String MONGODB_PASS = "hQ97T9JJKZoqnFn2NXE" ; 
 	private static final String BACKEND_ENGINE = "mongodb" ; 
@@ -60,7 +64,7 @@ public class MongoSecretIntegration {
 	private static final String MAX_TIME_TO_LIVE ="24h" ; 
 	
 	// To Do verify custom statements 
-	private static final String ROLE_STATEMENT = String.format("\"{ \\\"db\\\": \\\"%s\\\", \\\"roles\\\": [{ \\\"role\\\": \\\"readWrite\\\" }, {\\\"role\\\": \\\"read\\\", \\\"db\\\": \\\"foo\\\"}] }\"",DATABASE_NAME) ;
+	private static final String ROLE_STATEMENT = String.format("{ \"db\": \"%s\", \"roles\": [{ \"role\": \"service1\" }, {\"role\": \"service1\", \"db\": \"%s\"}] }",DATABASE_NAME,DATABASE_NAME) ;
 	private static final VaultOperations vaultOperations = null;
 	private static final TaskScheduler TaskScheduler = null;  
 	
@@ -105,16 +109,12 @@ public class MongoSecretIntegration {
 	}
 	
 	public void CreateRole(VaultTemplate vaultTemplate,String roleName){
+		
 		HashMap<String,Object> roleMap = new HashMap<String,Object>();
-		
-		List<String> statements = new ArrayList<String>() ; 
-		
-		statements.add(ROLE_STATEMENT) ; 
-		
-		
+	
 		
 		roleMap.put("db_name",DATABASE_NAME) ;
-		roleMap.put("creation_statements", statements) ; 
+		roleMap.put("creation_statements", ROLE_STATEMENT) ; 
 		roleMap.put("default_ttl",TIME_TO_LIVE) ;
 		roleMap.put("max_ttl",MAX_TIME_TO_LIVE) ; 
 		

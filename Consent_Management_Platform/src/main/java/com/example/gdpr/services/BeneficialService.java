@@ -28,7 +28,7 @@ public class BeneficialService {
 	MongoConfiguration mongoConfig ; 
 	
 	
-	public Document findUserById(String id){
+	public Document findUserById(String id,String serviceName){
 		
 		//Retreive data base creds from vault 
 		
@@ -38,7 +38,7 @@ public class BeneficialService {
 		// retreive data base creds 
 		
 		try{
-			Map<String,Object> response = vaultCommunication.getDataBaseCredentials(vaultTemplate);
+			Map<String,Object> response = vaultCommunication.getDataBaseCreds(vaultTemplate,serviceName);
 			
 			dataBaseUserName = response.get("username").toString();
 			dataBasePassword = response.get("password").toString() ; 
