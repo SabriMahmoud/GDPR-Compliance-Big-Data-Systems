@@ -26,9 +26,16 @@ Now after **storing** the data for authorization,our Bankerise application servi
 The data is devided into two main Collections which are the all customer data and the authorized per service and for each service a pipline generates UsersView where all data within it is eligible to use.
 Example : if we have **n** services the number of collections will be **n+2**. 
 
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/authorized_data.png)
+
 <p align="center">
   <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/dataPartition.png" />
 </p>
+
+**Autorized Data Format** : 
+- 0 : not allowed to use by service 
+- 1 : allowed to use by service 
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/authorized_data.png)
 
 
 ## Project Architecture 
@@ -42,17 +49,26 @@ Example : if we have **n** services the number of collections will be **n+2**.
 
 ![alt text](https://mktg-content-api-hashicorp.vercel.app/api/assets?product=tutorials&version=main&asset=public%2Fimg%2Fvault%2Fvault-mongodb.png)
 
+
 ## Steps to run the project properly 
-- First : start Vault Docker container using this command 
+Before running the Spring Boot Application  there are two steps that you need to perform 
+- **1** : start Vault Docker container using this command 
 
 
-``sudo docker run  --net BigData --name vault1 -d --cap-add=IPC_LOCK
+``docker run  --net BigData --name vault1 -d --cap-add=IPC_LOCK
 -e 'VAULT_DEV_ROOT_TOKEN_ID=myroot' -e 'VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200' 
 -p 8200:8200 vault``
+
+- **2** : start Mongodb container using this command 
+
+``docker run -d -p 0.0.0.0:27017:27017 --name=mongodb -e MONGO_INITDB_ROOT_USERNAME="mdbadmin" -e MONGO_INITDB_ROOT_PASSWORD="hQ97T9JJKZoqnFn2NXE" mongo
+``
 
 **Note** : 
 
            - For more information about building Vault image  visit the official Docker image on Docker Hub 
 
            - Specifying the container network is certain to assure the communication between other containers  within the Application 
+           
+
    
