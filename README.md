@@ -26,7 +26,6 @@ Now after **storing** the data for authorization,our Bankerise application servi
 The data is devided into two main Collections which are the all customer data and the authorized per service and for each service a pipline generates UsersView where all data within it is eligible to use.
 Example : if we have **n** services the number of collections will be **n+2**. 
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/authorized_data.png)
 
 <p align="center">
   <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/dataPartition.png" />
@@ -35,7 +34,11 @@ Example : if we have **n** services the number of collections will be **n+2**.
 **Autorized Data Format** : 
 - 0 : not allowed to use by service 
 - 1 : allowed to use by service 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/authorized_data.png)
+
+<p align="center">
+  <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/authorized_data.png" />
+</p>
+
 
 
 ## Project Architecture 
@@ -49,6 +52,66 @@ Example : if we have **n** services the number of collections will be **n+2**.
 
 ![alt text](https://mktg-content-api-hashicorp.vercel.app/api/assets?product=tutorials&version=main&asset=public%2Fimg%2Fvault%2Fvault-mongodb.png)
 
+### Enable The Data Base Secret Engine 
+- Services package MongoSecretIntegration class
+
+```java
+	public void MountDataBaseSecretEngine(VaultTemplate vaultTemplate){
+		
+		VaultSysOperations sysOperations = vaultTemplate.opsForSys();
+		if (sysOperations != null && !sysOperations.getMounts().containsKey("mongodb/")) {
+		      sysOperations.mount("mongodb", VaultMount.create("database"));
+		    }
+	}
+  
+``` 
+
+### Configure database connection
+
+```java
+	public void EnableVaultMongoConnection(VaultTemplate vaultTemplate) {
+	    HashMap<String, String> secretEngineMap = new HashMap<String, String>() ;
+	    
+	    secretEngineMap.put("plugin_name", BACKEND_PLUGIN_NAME) ; 
+	    secretEngineMap.put("connection_url", ROOT_CREDENTIALS) ;
+	    secretEngineMap.put("allowed_roles", "*") ; 
+	    secretEngineMap.put("username",MONGODB_USER) ;
+	    secretEngineMap.put("password",MONGODB_PASS) ;
+	    
+	    
+	    vaultTemplate.write(String.format("%s/config/%s",BACKEND_ENGINE,DATABASE_NAME),secretEngineMap); 
+	}
+  
+``` 
+
+### Create Role for each database client 
+
+  ```java
+    public void CreateRole(VaultTemplate vaultTemplate,String roleName){
+
+          HashMap<String,Object> roleMap = new HashMap<String,Object>();
+
+
+          roleMap.put("db_name",DATABASE_NAME) ;
+          roleMap.put("creation_statements", ROLE_STATEMENT) ; 
+          roleMap.put("default_ttl",TIME_TO_LIVE) ;
+          roleMap.put("max_ttl",MAX_TIME_TO_LIVE) ; 
+
+
+          vaultTemplate.write(String.format("%s/roles/%s",BACKEND_ENGINE,roleName),roleMap);
+
+    }
+  
+``` 
+### Get database credentials for the service 
+
+  ```java
+      public Map<String, Object> getDataBaseCreds(VaultTemplate vaultTemplate , String serviceName){
+        VaultResponse response = vaultTemplate.read(String.format("mongodb/creds/%s",serviceName));
+        return response.getData() ; 
+      }
+  
+``` 
 
 ## Steps to run the project properly 
 Before running the Spring Boot Application  there are two steps that you need to perform 
