@@ -1,11 +1,37 @@
 # GDPR Compliance BigData Systems 
 This projects aims at implementing Vault as a solution for data protection the research paper **A framework for GDPR compliance in Big Data
-systems** made by Mouna Rhahla, Sahar Allegue and Takoua Abdellatif in **Proxym-Lab** Refer to Documents directory for more information.
+systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** in **Proxym-Lab** Refer to Documents directory for more information.
 
-**Superviser :** Tarek Sghair 
+**SUPERVISER :** **Tarek Sghair**
+
+## Context and Objectives
+
+### Context
+
+In order to retrive **restrictions** to protect customer data from the application services a **pop-up** will be viewed in customer side to **choose** **who** is allowed and **which** data to consume in processing.
+
+Here is an example for a **single** internal service: 
+
+- Customer 1 : service cannot use his last name and the amount of transfer 
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/context.png)
+
+### Objective 
+Now after **storing** the data for authorization,our Bankerise application services will try to **proccess** it, the **senario** is like the following: 
+- **Request** : The service will try to get the needed data from the data base. 
+- **Response** : The response must be only the authorized data of the required customer.
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/objective.png)
+
+### Data partition in MongoDB 
+The data is devided into two main Collections which are the all customer data and the authorized per service and for each service a pipline generates UsersView where all data within it is eligible to use.
+Example : if we have **n** services the number of collections will be **n+2**. 
+
+<p align="center">
+  <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/dataPartition.png" />
+</p>
 
 
-# Project Architecture 
+## Project Architecture 
 
 **Admin** : Application admin 
 
