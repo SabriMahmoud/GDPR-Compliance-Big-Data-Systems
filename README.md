@@ -52,7 +52,7 @@ Example : if we have **n** services the number of collections will be **n+2**.
 
 ![alt text](https://mktg-content-api-hashicorp.vercel.app/api/assets?product=tutorials&version=main&asset=public%2Fimg%2Fvault%2Fvault-mongodb.png)
 
-### Enable The Data Base Secret Engine 
+### 1.Enable The Data Base Secret Engine 
 - Services package MongoSecretIntegration class
 
 ```java
@@ -66,7 +66,7 @@ Example : if we have **n** services the number of collections will be **n+2**.
   
 ``` 
 
-### Configure database connection
+### 2.Configure database connection
 
 ```java
 	public void EnableVaultMongoConnection(VaultTemplate vaultTemplate) {
@@ -84,7 +84,7 @@ Example : if we have **n** services the number of collections will be **n+2**.
   
 ``` 
 
-### Create Role for each database client 
+### 3.Create Role for each database client 
 
   ```java
     public void CreateRole(VaultTemplate vaultTemplate,String roleName){
@@ -103,15 +103,33 @@ Example : if we have **n** services the number of collections will be **n+2**.
     }
   
 ``` 
-### Get database credentials for the service 
+### 4.Get database credentials for the service 
 
-  ```java
+```java
       public Map<String, Object> getDataBaseCreds(VaultTemplate vaultTemplate , String serviceName){
         VaultResponse response = vaultTemplate.read(String.format("mongodb/creds/%s",serviceName));
         return response.getData() ; 
       }
   
 ``` 
+
+### 5.Connect to database 
+
+  ```java
+    public MongoClient mongoClient(String username, String password) {
+    	
+
+    	
+        ConnectionString connectionString = new ConnectionString(String.format("mongodb://%s:%s@localhost:27017/%s",username,password,this.getDatabaseName()));
+        MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
+            .applyConnectionString(connectionString)
+            .build();
+        
+        return MongoClients.create(mongoClientSettings);
+    }
+  
+``` 
+
 
 ## Steps to run the project properly 
 Before running the Spring Boot Application  there are two steps that you need to perform 
