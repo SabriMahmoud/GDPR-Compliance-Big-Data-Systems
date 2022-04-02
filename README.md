@@ -52,6 +52,8 @@ Example : if we have **n** services the number of collections will be **n+2**.
 
 ![alt text](https://mktg-content-api-hashicorp.vercel.app/api/assets?product=tutorials&version=main&asset=public%2Fimg%2Fvault%2Fvault-mongodb.png)
 
+**Note:** when the service access the DB with the provided token the only collection that will be visible is the authorized one which is the View in our case.
+
 ### 1.Enable The Data Base Secret Engine 
 - Services package MongoSecretIntegration class
 
