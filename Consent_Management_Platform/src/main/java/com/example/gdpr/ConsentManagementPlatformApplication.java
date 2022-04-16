@@ -20,6 +20,7 @@ import org.springframework.vault.support.VaultResponse;
 import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.example.gdpr.configuration.MongoConfiguration;
 import com.example.gdpr.entities.Credentials;
@@ -58,6 +59,8 @@ public class ConsentManagementPlatformApplication {
 	//Secure path 
 	
 	private static final String MONGO_VAULT_CREDENTIALS_PATH = "mongodbSecrets/app" ; 
+	private static final String VAULT_SERVICE_CREDENTIALS_PATH = "ApplicationServices" ; 
+	
 
 	
 
@@ -92,10 +95,17 @@ public class ConsentManagementPlatformApplication {
 		System.out.println(String.format("Service : %s Created Successfully ",serviceName));
 		
 		
+		
+		Map<String,Object> secretsMap = new HashMap<String,Object>() ; 
+		secretsMap.put("service1","hello_bankerise") ; 
+
+		vaultCommunication.secureCredentials(VAULT_SERVICE_CREDENTIALS_PATH, vaultTemplate,secretsMap);
+		
+		
 		//secure credentials in Vault
 		
-		Credentials dataBaseCredentials = new Credentials(dataBaseUserName,dataBasePassword) ; 
-		vaultTemplate.write(MONGO_VAULT_CREDENTIALS_PATH,dataBaseCredentials);
+//		Credentials dataBaseCredentials = new Credentials(dataBaseUserName,dataBasePassword) ; 
+//		vaultTemplate.write(MONGO_VAULT_CREDENTIALS_PATH,dataBaseCredentials);
 		
 //		System.out.println(vaultTemplate.list("mongodb/roles"));
 //		

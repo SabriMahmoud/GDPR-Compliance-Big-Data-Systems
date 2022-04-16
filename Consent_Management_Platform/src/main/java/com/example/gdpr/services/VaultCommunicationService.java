@@ -2,6 +2,7 @@ package com.example.gdpr.services;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpEntity;
@@ -10,7 +11,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.vault.core.RestOperationsCallback;
+import org.springframework.vault.core.VaultKeyValueOperations;
 import org.springframework.vault.core.VaultTemplate;
+import org.springframework.vault.core.VaultKeyValueOperationsSupport.KeyValueBackend;
 import org.springframework.vault.support.VaultResponse;
 import org.springframework.web.client.RestOperations;
 
@@ -61,6 +64,7 @@ public class VaultCommunicationService {
 	
 	public Map<String, Object> getDataBaseCreds(VaultTemplate vaultTemplate , String serviceName){
 		VaultResponse response = vaultTemplate.read(String.format("mongodb/creds/%s",serviceName));
+//		VaultResponse response = vaultTemplate.read("mongodb/creds/service1");
 		return response.getData() ; 
 	}
 	
@@ -74,6 +78,11 @@ public class VaultCommunicationService {
 	public void createTokenAttachedToPolicy(VaultTemplate vaultTemplate){
 		vaultTemplate.write(String.format("/auth/token/create"),tokenSingleton) ; 
 		
+	}
+	
+	public void secureCredentials(String path,VaultTemplate vaultTemplate,Map<String, Object> secretsMap){
+		VaultKeyValueOperations response = vaultTemplate.opsForKeyValue("secret", KeyValueBackend.KV_2);
+		response.put(path,secretsMap);
 	}
 	
 	

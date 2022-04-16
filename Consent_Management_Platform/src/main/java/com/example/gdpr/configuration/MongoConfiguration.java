@@ -1,5 +1,6 @@
 package com.example.gdpr.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 
@@ -11,6 +12,7 @@ import com.mongodb.client.MongoClients;
 @Configuration(proxyBeanMethods = false)
 public class MongoConfiguration{
 	
+	
 	private String dataBaseName ; 
  
 
@@ -20,7 +22,7 @@ public class MongoConfiguration{
 	}
     protected String getDatabaseName() {
 
-		  return "Bankerise" ; 
+		  return "Bankerise"; 
     }
  
     public MongoClient mongoClient(String username, String password) {
