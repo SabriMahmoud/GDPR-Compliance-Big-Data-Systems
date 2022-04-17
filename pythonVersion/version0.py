@@ -1,6 +1,7 @@
 from tkinter import E
 import hvac
-
+from pymongo import MongoClient
+import pymongo
 import hvac.api.secrets_engines.database as DataBase
 
 
@@ -33,3 +34,33 @@ try :
             connection_url = connection_url , username = username , password = password )
 except Exception as e : 
     print("DataSource Not Found")
+
+db_name =  "Bankerise"
+creation_statements =  ["{ \"db\": \"Bankerise\", \"roles\": [{ \"role\": \"service1\" }, {\"role\": \"service1\", \"db\": \"Bankerise\"}] }"]
+default_ttl =  "1h"
+max_ttl =  "24h"
+client.write("/mongodb/roles/service1",db_name=db_name,creation_statements=creation_statements,
+            default_ttl= default_ttl, max_ttl = max_ttl )
+
+
+def get_database(dataBaseName,username,password):
+
+
+    # Provide the mongodb atlas url to connect python to mongodb using pymongo
+    CONNECTION_STRING = "mongodb://"+ username+ ":" +password + "@localhost:27017/" + dataBaseName
+    # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
+    from pymongo import MongoClient
+    client = MongoClient(CONNECTION_STRING)
+
+    # Create the database for our example (we will use the same database throughout the tutorial
+    return client[dataBaseName] 
+
+vaultResponse = client.read("/mongodb/creds/service1")
+serviceUserName = vaultResponse["data"]["username"]
+servicePassword = vaultResponse["data"]["password"]
+
+
+c = get_database("Bankerise",serviceUserName,servicePassword)
+for element in c.get_collection("UsersView").find():
+    if element['id'] == '1':
+        print(element)
