@@ -1,4 +1,5 @@
 # GDPR Compliance BigData Systems 
+
 This projects aims at implementing Vault as a solution for data protection the research paper **A framework for GDPR compliance in Big Data
 systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** in **Proxym-Lab** Refer to Documents directory for more information.
 
@@ -17,12 +18,14 @@ Here is an example for a **single** internal service:
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/context.png)
 
 ### Objective 
+
 Now after **storing** the data for authorization,our Bankerise application services will try to **proccess** it, the **senario** is like the following: 
 - **Request** : The service will try to get the needed data from the data base. 
 - **Response** : The response must be only the authorized data of the required customer.
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/objective.png)
 
 ### Data partition in MongoDB 
+
 The data is devided into two main Collections which are the all customer data and the authorized per service and for each service a pipline generates UsersView where all data within it is eligible to use.
 Example : if we have **n** services the number of collections will be **n+2**. 
 
@@ -40,12 +43,16 @@ Example : if we have **n** services the number of collections will be **n+2**.
 </p>
 
 
+# Project Architecture 
 
-## Project Architecture 
+
+
+
+## Project Implementation  
 
 **Admin** : Application admin 
 
-**Clients** : Spring Boot Services 
+**Clients** : FLASK Services 
 
 **MongoDB** : Application Data Base contains users and Application Data 
 
