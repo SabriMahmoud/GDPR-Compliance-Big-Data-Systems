@@ -50,8 +50,8 @@ Example : if we have **n** services the number of collections will be **n+2**.
 
 
 
-## Project Implementation  
-### Module 1 Data Protection Officier 
+# Project Implementation  
+## Module 1 Data Protection Officier 
 
 
 **Admin** : Application admin 
@@ -70,7 +70,7 @@ Example : if we have **n** services the number of collections will be **n+2**.
 
 
 
-#### Steps to run Module 1 properly 
+### Steps to run Module 1 properly 
 
 
 Before running the Spring Boot Application  there are two steps that you need to perform 
@@ -92,14 +92,19 @@ Before running the Spring Boot Application  there are two steps that you need to
 
            - Specifying the container network is certain to assure the communication between other containers  within the Application 
            
-### Module 2 
+## Module 2 
 
-#### Server Status 
+### Server Status 
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png)
 
-#### Data Flow Manager 
+### Data Flow Manager
+ 
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_and_zookeeper.png)
            
+#### Database Sink Connector 
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
 
 
 
