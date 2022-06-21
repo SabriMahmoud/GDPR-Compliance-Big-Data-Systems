@@ -97,9 +97,9 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 
 To make the project up and running clone the repository by typing these commands .
 ```bash
-	git clone https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems.git
-	cd GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/Kafka_Connect/
-	./test_rootless.sh
+git clone https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems.git
+cd GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/Kafka_Connect/
+./test_rootless.sh
 	
 ```   
 proceed to **PythonVersion_Consent_Management/Data_Management/Kafka/Kafka_Connect/** directory where you'll find a bash script that do all commands for you
