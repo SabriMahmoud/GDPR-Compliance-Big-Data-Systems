@@ -9,6 +9,15 @@ systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** 
 
 ### Context
 
+Log data is the information recorded by your application server about when, how, and which visitors are using your website. Application server providers  commonly collect the following information about each user:
+  
+  - **IP address and device identifier**: This is the unique identifying address broadcasted by the browser or device by which each user is accessing your online platform.
+  - **Request date/time**: The specific date and time of each action the user takes.
+  - **Personal details**: Including the full name of a user ,identity number and password.
+  - **Device**: Wether the user is connected from a web or mobile application.
+  - **Transaction Amount**: When a transaction process is triggered the amout will be saved.
+
+
 In order to retrive **restrictions** to protect customer data from the application services a **pop-up** will be viewed in customer side to **choose** **who** is allowed and **which** data to consume in processing.
 
 Here is an example for a **single** internal service: 
