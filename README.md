@@ -30,9 +30,9 @@ In order to do so **restrictions** to protect customer data from the application
 Here is an example illustrating a senario for more understanding of the problem:
 
 Let serviceA be one of the mentioned services in the above paragraph
-	- User 1 : The serviceA has a restriction on the last name and the amount of transfer 
-	- User 2 : The serviceA has a restriction on the customer name, the device and the service provided to the user
-	- User 3 : The serviceA has a restriction on the customer name; customer last name and the device 
+  - User 1 : The serviceA has a restriction on the last name and the amount of transfer 
+  - User 2 : The serviceA has a restriction on the customer name, the device and the service provided to the user
+  - User 3 : The serviceA has a restriction on the customer name; customer last name and the device 
 	 
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/context.png)
