@@ -1,8 +1,22 @@
 #!/bin/sh
 
+echo "================================================="
+echo "Starting Docker Container........"
+
+
 docker-compose up -d
+
+echo "Downloading Connect plugin......."
+
 wget https://github.com/mongodb/mongo-kafka/releases/download/r1.6.0/mongodb-kafka-connect-mongodb-1.6.0.zip
 unzip mongodb-kafka-connect-mongodb-1.6.0.zip 
+
+echo "================================================="
+
+
+echo "Copying the plugin inside connect container......."
+
+
 docker cp mongodb-kafka-connect-mongodb-1.6.0 connect:/usr/share/java/
 sleep 5
 docker restart connect
@@ -13,6 +27,11 @@ sleep 10
 curl -s -X GET http://localhost:8083/connector-plugins | jq | head -n 20
 
 sleep 10 
+
+echo "Creating kafka topics........."
+
+
+echo "================================================="
 
 python3 ../create_kafka_topics.py -t events-events.deadletter -p 3-3
 
@@ -38,9 +57,17 @@ curl --request POST   --url http://localhost:8083/connectors   --header 'Content
 
 sleep 20
 
+echo "================================================="
+
 
 curl -s -X GET http://localhost:8083/connectors
 sleep 10
+
+echo "================================================="
+
 curl -s -X GET http://localhost:8083/connectors/mongo-sink-connector/tasks/0/status | jq
+
+echo "================================================="
+
 sleep 10
 python3 ../producer.py
