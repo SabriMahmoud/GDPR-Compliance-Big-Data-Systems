@@ -52,7 +52,9 @@ Example : if we have **n** services the number of collections will be **n+2**.
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/architecture.png)
 
 
+# Technologies Identification 
 
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/technologies_id.png)
 
 # Project Implementation  
 ## Module 1 Data Protection Officier 
