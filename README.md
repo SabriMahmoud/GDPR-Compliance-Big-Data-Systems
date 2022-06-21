@@ -8,7 +8,7 @@ systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** 
 ## Context and Objectives
 
 #### Key words 
-   - **Service** : Which is one of the programmed services it may be any API that needs data to process such as **Machine Learning** service that demands customer data at REST to perform clustering or client segmentation,**Analytics** service that performs data aggregations in order to make a statistical dashboard that helps in decision making etc ... 
+   - **Service**: Which is one of the programmed services it may be any API that needs data to process such as a **Machine Learning** service that demands customer data at REST to perform clustering or client segmentation,an **Analytics** service that performs data aggregations in order to make a statistical dashboard that helps in decision making etc ... 
    - **Restriction** : It is the order of control of which the subject data is not allowed for any use.
 
 ### Context
@@ -18,16 +18,16 @@ Log data is the information recorded by your application server about when, how,
   - **IP address and device identifier**: This is the unique identifying address broadcasted by the browser or device by which each user is accessing your online platform.
   - **Request date/time**: The specific date and time of each action the user takes.
   - **Personal details**: Including the full name of a user ,identity number and password.
-  - **Device**: Wether the user is connected from a web or mobile application.
+  - **Device**: Whether the user is connected from a web or mobile application.
   - **Transaction Amount**: The amount of a triggered  transaction process.
   - **Service**: The service provided by the application .
 
 It is trivial to ignore the **sensitivity** and the **privacy** of the logs generated, a GDPR based application contains the necessary components stacked in layers in order to build a **trusted** application and ensure **confidentiality** by providing all users the ability to **control** all data usage except the ones of which needed for server or application required operations.
 
-In order to do so **restrictions** to protect customer data from the application services must be provided to **choose** **who**(Service?) is allowed and **which**(attribute?) data to consume in processing.All restrictions will be stored in datebase for further needs.
+In order to do so **restrictions** to protect customer data from the application services must be provided to **choose** **who**(Service?) is allowed and **which**(attribute?) data to consume in processing.All restrictions will be stored in a database for further needs.
 
 
-Here is an example illustrating a senario for more understanding of the problem:
+Here is an example illustrating a scenario for more understanding of the problem:
 
 Let serviceA be one of the mentioned services in the above paragraph
   - User 1 : The serviceA has a restriction on the last name and the amount of transfer 
