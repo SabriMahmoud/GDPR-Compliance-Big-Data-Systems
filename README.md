@@ -8,8 +8,8 @@ systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** 
 ## Context and Objectives
 
 #### Key words 
-	- **Service** : Which is one of the programmed services it may be any API that needs data to process such as **Machine Learning** service that demands customer data at REST to perform clustering or client segmentation,**Analytics** service that performs data aggregations in order to make a statistical dashboard that helps in decision making etc ... 
-	- **Restriction** : It is the order of control of which the subject data is not allowed for any use.
+   - **Service** : Which is one of the programmed services it may be any API that needs data to process such as **Machine Learning** service that demands customer data at REST to perform clustering or client segmentation,**Analytics** service that performs data aggregations in order to make a statistical dashboard that helps in decision making etc ... 
+   - **Restriction** : It is the order of control of which the subject data is not allowed for any use.
 
 ### Context
 
@@ -41,13 +41,14 @@ Let serviceA be one of the mentioned services in the above paragraph
 
 Now after **storing** the data for authorization,our application services will try to **proccess** it, the **senario** is like the following: 
 
-- **Request** : The service will try to get the required data from the database. 
+- **Request** : The service will try to get the required data (user1 in the example) from the database. 
 - **Response** : The response must contain only the authorized data of the required customers.
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/objective.png)
 
 ### Objective 
 
+Our main two goals are to garantee end to end secure data flow in real time  by delivering encrypted logs and  maintaining access control layer built on top of the database with respect to all GDPR constraints. 
 
 ### Data partition in MongoDB 
 
