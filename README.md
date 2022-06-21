@@ -51,6 +51,8 @@ Example : if we have **n** services the number of collections will be **n+2**.
 
 
 ## Project Implementation  
+### Module 1 Data Protection Officier 
+
 
 **Admin** : Application admin 
 
@@ -59,13 +61,16 @@ Example : if we have **n** services the number of collections will be **n+2**.
 **MongoDB** : Application Data Base contains users and Application Data 
 
 
+
+
+
 ![alt text](https://mktg-content-api-hashicorp.vercel.app/api/assets?product=tutorials&version=main&asset=public%2Fimg%2Fvault%2Fvault-mongodb.png)
 
 **Note:** when the service access the DB with the provided token the only collection that will be visible is the authorized one which is the View in our case.
 
 
 
-## Steps to run the project properly 
+#### Steps to run Module 1 properly 
 
 
 Before running the Spring Boot Application  there are two steps that you need to perform 
@@ -87,12 +92,14 @@ Before running the Spring Boot Application  there are two steps that you need to
 
            - Specifying the container network is certain to assure the communication between other containers  within the Application 
            
-           
-## Data Flow Management
+### Module 2 
 
-### Server Status 
+#### Server Status 
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png)
+
+#### Data Flow Manager 
+           
 
 
 
