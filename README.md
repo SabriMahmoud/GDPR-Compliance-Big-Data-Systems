@@ -18,6 +18,7 @@ Log data is the information recorded by your application server about when, how,
   - **Transaction Amount**: The amount of a triggered  transaction process.
   - **Service**: The service provided by the application .
 
+It is trivial to ignore the sensitivity and the privacy of the logs generated, a GDPR based application provides contains the necessary components stacked in layers in order to build trust and ensure confidentiality.
 
 In order to retrive **restrictions** to protect customer data from the application services a **pop-up** will be viewed in customer side to **choose** **who** is allowed and **which** data to consume in processing.
 
