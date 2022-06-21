@@ -1,11 +1,15 @@
 # GDPR Compliance BigData Systems 
 
-This projects aims at implementing Vault as a solution for data protection the research paper **A framework for GDPR compliance in Big Data
+This projects aims at implementing a solution for the European Data Protection Regulation, the research paper **A framework for GDPR compliance in Big Data
 systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** in **Proxym-Lab** Refer to Documents directory for more information.
 
 **SUPERVISER :** **Tarek Sghair**
 
 ## Context and Objectives
+
+#### Key words 
+	- **Service** : Which is one of the programmed services it may be any API that needs data to process such as **Machine Learning** service that demands customer data at REST to perform clustering or client segmentation,**Analytics** service that performs data aggregations in order to make a statistical dashboard that helps in decision making etc ... 
+	- **Restriction** : It is the order of control of which the subject data is not allowed for any use.
 
 ### Context
 
@@ -18,22 +22,32 @@ Log data is the information recorded by your application server about when, how,
   - **Transaction Amount**: The amount of a triggered  transaction process.
   - **Service**: The service provided by the application .
 
-It is trivial to ignore the sensitivity and the privacy of the logs generated, a GDPR based application contains the necessary components stacked in layers in order to build trust and ensure confidentiality by providing all users the ability to control all data usage except the ones of which needed for server or application required operations.
+It is trivial to ignore the **sensitivity** and the **privacy** of the logs generated, a GDPR based application contains the necessary components stacked in layers in order to build a **trusted** application and ensure **confidentiality** by providing all users the ability to **control** all data usage except the ones of which needed for server or application required operations.
 
-In order to retrive **restrictions** to protect customer data from the application services a **pop-up** will be viewed in customer side to **choose** **who** is allowed and **which** data to consume in processing.
+In order to do so **restrictions** to protect customer data from the application services must be provided to **choose** **who**(Service?) is allowed and **which**(attribute?) data to consume in processing.All restrictions will be stored in datebase for further needs.
 
-Here is an example for a **single** internal service: 
 
-- Customer 1 : service cannot use his last name and the amount of transfer 
+Here is an example illustrating a senario for more understanding of the problem:
+
+Let serviceA be one of the mentioned services in the above paragraph
+	- User 1 : The serviceA has a restriction on the last name and the amount of transfer 
+	- User 2 : The serviceA has a restriction on the customer name, the device and the service provided to the user
+	- User 3 : The serviceA has a restriction on the customer name; customer last name and the device 
+	 
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/context.png)
 
+
+
+Now after **storing** the data for authorization,our application services will try to **proccess** it, the **senario** is like the following: 
+
+- **Request** : The service will try to get the required data from the database. 
+- **Response** : The response must contain only the authorized data of the required customers.
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/objective.png)
+
 ### Objective 
 
-Now after **storing** the data for authorization,our Bankerise application services will try to **proccess** it, the **senario** is like the following: 
-- **Request** : The service will try to get the needed data from the data base. 
-- **Response** : The response must be only the authorized data of the required customer.
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/objective.png)
 
 ### Data partition in MongoDB 
 
