@@ -15,7 +15,8 @@ Log data is the information recorded by your application server about when, how,
   - **Request date/time**: The specific date and time of each action the user takes.
   - **Personal details**: Including the full name of a user ,identity number and password.
   - **Device**: Wether the user is connected from a web or mobile application.
-  - **Transaction Amount**: When a transaction process is triggered the amout will be saved.
+  - **Transaction Amount**: The amount of a triggered  transaction process.
+  - **Service**: The service provided by the application .
 
 
 In order to retrive **restrictions** to protect customer data from the application services a **pop-up** will be viewed in customer side to **choose** **who** is allowed and **which** data to consume in processing.
