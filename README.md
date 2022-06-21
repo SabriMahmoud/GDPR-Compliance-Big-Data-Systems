@@ -42,6 +42,10 @@ Example : if we have **n** services the number of collections will be **n+2**.
   <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/authorized_data.png" />
 </p>
 
+# Database Architecture
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/database_architecture.png)
+
 
 # Project Architecture 
 
