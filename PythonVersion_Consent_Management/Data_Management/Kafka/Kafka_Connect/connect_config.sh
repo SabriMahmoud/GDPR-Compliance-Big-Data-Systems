@@ -11,7 +11,7 @@ docker-compose up -d
 echo "Downloading Connect plugin......."
 # downloading connect plugin
 wget https://github.com/mongodb/mongo-kafka/releases/download/r1.6.0/mongodb-kafka-connect-mongodb-1.6.0.zip
-
+sleep 10 
 echo "================================================="
 
 unzip 'mongodb-kafka-connect-mongodb-1.6.0.zip'
@@ -23,13 +23,13 @@ echo "                                                   "
 
 docker cp ./mongodb-kafka-connect-mongodb-1.6.0 connect:/usr/share/java/
 
+sleep 10
 
 docker restart connect
-sleep 15
 docker ps 
 
 
-
+sleep 10
 
 curl -s -X GET http://localhost:8083/connector-plugins | grep '{"class":"com.mongodb.kafka.connect.MongoSinkConnector","type":"sink","version":"1.6.0"},{"class":"com.mongodb.kafka.connect.MongoSourceConnector","type":"source","version":"1.6.0"}' 
 

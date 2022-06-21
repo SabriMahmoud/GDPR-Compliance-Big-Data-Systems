@@ -1,12 +1,12 @@
 #!/bin/sh
 
-sudo docker-compose up -d
+docker-compose up -d
 wget https://github.com/mongodb/mongo-kafka/releases/download/r1.6.0/mongodb-kafka-connect-mongodb-1.6.0.zip
 unzip mongodb-kafka-connect-mongodb-1.6.0.zip 
-sudo docker cp mongodb-kafka-connect-mongodb-1.6.0 connect:/usr/share/java/
+docker cp mongodb-kafka-connect-mongodb-1.6.0 connect:/usr/share/java/
 sleep 5
-sudo docker restart connect
-sudo docker ps
+docker restart connect
+docker ps
 
 sleep 10
 
@@ -40,7 +40,7 @@ sleep 20
 
 
 curl -s -X GET http://localhost:8083/connectors
-sleep 15
+sleep 10
 curl -s -X GET http://localhost:8083/connectors/mongo-sink-connector/tasks/0/status | jq
 sleep 10
 python3 ../producer.py
