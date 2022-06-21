@@ -39,7 +39,7 @@ Let serviceA be one of the mentioned services in the above paragraph
 
 
 
-Now after **storing** the data for authorization,our application services will try to **proccess** it, the **senario** is like the following: 
+Now after **storing** the data for authorization,our application services will try to **proccess** it, the **scenario** is like the following: 
 
 - **Request** : The service will try to get the required data (user1 in the example) from the database. 
 - **Response** : The response must contain only the authorized data of the required customers.
@@ -52,8 +52,9 @@ Our main two goals are to garantee end to end secure data flow in real time  by 
 
 ### Data partition in MongoDB 
 
-The data is devided into two main Collections which are the all customer data and the authorized per service and for each service a pipline generates UsersView where all data within it is eligible to use.
-Example : if we have **n** services the number of collections will be **n+2**. 
+For each service we have authorized customer data, a pipline generates the **View** where all data within it is eligible to use.
+Example : if we have **n** services the number of collections will be **n + 1 policy collection + all data collection**.
+ 
 
 
 <p align="center">
@@ -82,7 +83,34 @@ Example : if we have **n** services the number of collections will be **n+2**.
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/technologies_id.png)
 
-# Project Implementation  
+# Project Implementation        
+## Module 1 
+
+
+### Data Flow Manager
+ 
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_and_zookeeper.png)
+           
+#### Database Sink Connector 
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
+
+To make the project up and running clone the repository by typing these commands .
+```bash
+	git clone https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems.git
+	cd GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/Kafka_Connect/
+	./test_rootless.sh
+	
+```   
+proceed to **PythonVersion_Consent_Management/Data_Management/Kafka/Kafka_Connect/** directory where you'll find a bash script that do all commands for you
+```bash
+	  
+```   
+### Server Status 
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png)
+
+
 ## Module 1 Data Protection Officier 
 
 
@@ -102,7 +130,7 @@ Example : if we have **n** services the number of collections will be **n+2**.
 
 
 
-### Steps to run Module 1 properly 
+### Steps to run Module 2 properly 
 
 
 Before running the Spring Boot Application  there are two steps that you need to perform 
@@ -123,22 +151,4 @@ Before running the Spring Boot Application  there are two steps that you need to
            - For more information about building Vault image  visit the official Docker image on Docker Hub 
 
            - Specifying the container network is certain to assure the communication between other containers  within the Application 
-           
-## Module 2 
-
-### Server Status 
-
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png)
-
-### Data Flow Manager
- 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_and_zookeeper.png)
-           
-#### Database Sink Connector 
-
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
-
-
-
-
    
