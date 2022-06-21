@@ -95,7 +95,14 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
 
-To make the project up and running clone the repository by typing these commands .
+* Before proceeding to run any script or command let's first install requirements :
+  - **Docker** installation :
+    ``  sudo apt-get update
+        sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin``
+
+ 
+
+To make the project up and running clone the repository and run the **test_rootless.sh** script by typing these commands .
 ```bash
 git clone https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems.git
 cd GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/Kafka_Connect/
