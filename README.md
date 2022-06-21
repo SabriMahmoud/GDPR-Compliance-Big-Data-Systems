@@ -97,8 +97,10 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 
 * Before proceeding to run any script or command let's first install requirements :
   - **Docker** installation :
-    ``  sudo apt-get update
-        sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin``
+  
+    ``  sudo apt-get update``
+        
+    ``sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin``
 
  
 
