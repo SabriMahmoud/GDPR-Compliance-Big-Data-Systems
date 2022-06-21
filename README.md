@@ -45,6 +45,8 @@ Example : if we have **n** services the number of collections will be **n+2**.
 
 # Project Architecture 
 
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/architecture.png)
+
 
 
 
@@ -64,6 +66,8 @@ Example : if we have **n** services the number of collections will be **n+2**.
 
 
 ## Steps to run the project properly 
+
+
 Before running the Spring Boot Application  there are two steps that you need to perform 
 - **1** : start Vault Docker container using this command 
 
@@ -83,5 +87,14 @@ Before running the Spring Boot Application  there are two steps that you need to
 
            - Specifying the container network is certain to assure the communication between other containers  within the Application 
            
+           
+## Data Flow Management
+
+### Server Status 
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png)
+
+
+
 
    
