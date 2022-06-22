@@ -7,25 +7,28 @@ systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** 
 
 # Table of Contents
 
-1. [Context And Objectives.................................................................................................................................](#context-and-objectives)  
-2. [Project Architecture...................................................................................................................................](#project-architecture)
-3. [Database Architecture..................................................................................................................................](#database-architecture)
-4. [Technologies Identification............................................................................................................................](#technologies-identification)
-5. [Project Implementation.................................................................................................................................](#project-implementation)
+1. [Context And Objectives](#context-and-objectives)  
+2. [Project Architecture](#project-architecture)
+3. [Database Architecture](#database-architecture)
+4. [Technologies Identification](#technologies-identification)
+5. [Project Implementation](#project-implementation)
 
-# GDPR Over View
+# GDPR Overview
 ## Principles
+
+You can check one of the research documents provided for an explanation of each principle .
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/principles.png)
 
 ## Actors 
+You can check one of the research documents provided for an explanation of each actor .
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/actors.png)
 
 # Context and Objectives
 
 ## Key words 
-   - **Service**: Which is one of the programmed services it may be any API that needs data to process such as a **Machine Learning** service that demands customer data at REST to perform clustering or client segmentation,an **Analytics** service that performs data aggregations in order to make a statistical dashboard that helps in decision making etc ... 
+   - **Service**: Which is one of the programmed services it may be any API that needs data to process such as a **Machine Learning** service that demands customer data at REST to perform clustering or client segmentation and an **Analytics** service that performs data aggregations in order to make a statistical dashboard that helps in decision making etc ... 
    - **Restriction** : It is the order of control of which the subject data is not allowed for any use.
 
 ## Context
@@ -72,6 +75,18 @@ Our main two goals are to garantee end to end secure data flow in real time  by 
 
 # Project Architecture 
 
+First of all,at time **T** and event **E** will occur during the normal or malfuncionning of the application and this event record will be stored in a log file in the image below the data source reprensents our application.
+
+Events may be one of the following :
+  - **Transaction**
+  - **Application Error**
+The dataflow manager will be intercepting and ready to process any incoming information to finally merge it to the database.
+
+On the other side, the data protection officer will be managing access control to database by providing a dynamique  token with a limitless life time triggered by a request from any existing service in the enterprise. 
+    
+Once the token is available, the service can get the required data except the ones restricted by the user.
+
+
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/architecture.png)
 
 # Database Architecture
@@ -104,7 +119,7 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 
 
 ### Data Flow Manager
-#### Quick Over View of Apache Kafka
+#### Quick Overview of Apache Kafka
 Apache Kafka's concept is very simple and easy to understand,it is essensially a distributed platform for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.
 
 It has these core APIs:
