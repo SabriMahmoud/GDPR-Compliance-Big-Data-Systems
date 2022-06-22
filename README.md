@@ -50,6 +50,13 @@ Now after **storing** the data for authorization,our application services will t
 
 Our main two goals are to garantee end to end secure data flow in real time  by delivering encrypted logs and  maintaining access control layer built on top of the database with respect to all GDPR constraints. 
 
+
+
+
+# Project Architecture 
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/architecture.png)
+
 # Database Architecture
 
 
@@ -69,15 +76,6 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 <p align="center">
   <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/authorized_data.png" />
 </p>
-
-# Database Architecture
-
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/database_architecture.png)
-
-
-# Project Architecture 
-
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/architecture.png)
 
 
 # Technologies Identification 
