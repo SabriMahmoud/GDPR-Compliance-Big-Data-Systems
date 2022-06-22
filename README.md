@@ -134,6 +134,7 @@ docker ps
 <p align="center">
   <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png" />
 </p>
+
 ### Database Sink Connector 
 
 #### Configuration 
@@ -160,7 +161,10 @@ Kafka connect configuration is already done inside the script **test_rootless.sh
 
 ```
 
+You can clearly see that the connector is confugured as a Sink Connecter by looking to **config** attribute **connector.class**. Here we mentioned one topic which is events and we gave the connector the database **url** and the **collection** to where to transfer 
+
 #### Data Factory 
+
 After we setteled the environement and created a kafka topic named **events** it is time to produce some logs.So as to achieve, proceed to 
 **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/** directory and run **producer.py**.
 
