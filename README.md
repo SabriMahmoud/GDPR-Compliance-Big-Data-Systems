@@ -8,10 +8,10 @@ systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** 
 # Table of Contents
 
 1. [Context And Objectives](#context-and-objectives)  
-2. [Project Architecture](#project-archiecture)
-3. [Database Architecture](#database-archiecture)
-4. [Technologies Identification](#technologies-archiecture)
-
+2. [Project Architecture](#project-architecture)
+3. [Database Architecture](#database-architecture)
+4. [Technologies Identification](#technologies-identification)
+5. [Project Implementation](#project-implementation)
 
 # Context and Objectives
 
@@ -96,14 +96,21 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 
 ### Data Flow Manager
 #### Quick Over View of Apache Kafka
-Apache Kafka's concept is very simple and easy to understand,it is essensially a distributed platform that ensures high streaming data flow and folt tolerence by reling on multiple brokers distributed over multiple hosts.
+Apache Kafka's concept is very simple and easy to understand,it is essensially a distributed platform for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.
 
 It has these core APIs:
   - **Producer API**: Applications can publish a stream of records to one or more Kafka topics.
   - **Consumer API**: Applications can subscribe to topics and process the stream of records produced to them.
   
-The core abstraction Kafka provides for a stream of records is the topic.
+The core abstraction Kafka provides for a stream of records is the **topic**.
 A topic is a category or feed name to which records are published. Topics in Kafka are always multi-subscriber. This means that a topic can have zero, one, or many consumers that subscribe to the data written to it.
+
+For each topic, the Kafka cluster maintains a **partitioned** log like the one showed in the image bellow.
+
+Each partition is an ordered, immutable sequence of records that is continually appended to a structured commit log. The records in the partitions are each assigned a sequential ID number called the offset, that uniquely identifies each record within the partition.
+
+The Kafka cluster also  durably persists all published records, whether they have been consumed using a configurable retention period or not,it’s performance is effectively constant with respect to data size, which means storing data for a long time is not a problem.
+
 
 #### Roles Identification
   - **Producer:** Any integrated Application
