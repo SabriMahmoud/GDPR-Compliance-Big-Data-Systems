@@ -5,13 +5,33 @@ systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** 
 
 **SUPERVISER :** **Tarek Sghair**
 
-## Context and Objectives
+# Table of Contents
 
-#### Key words 
-   - **Service**: Which is one of the programmed services it may be any API that needs data to process such as a **Machine Learning** service that demands customer data at REST to perform clustering or client segmentation,an **Analytics** service that performs data aggregations in order to make a statistical dashboard that helps in decision making etc ... 
+1. [Context And Objectives](#context-and-objectives)  
+2. [Project Architecture](#project-architecture)
+3. [Database Architecture](#database-architecture)
+4. [Technologies Identification](#technologies-identification)
+5. [Project Implementation](#project-implementation)
+
+# GDPR Overview
+## Principles
+
+You can check one of the research documents provided for an explanation of each principle .
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/principles.png)
+
+## Actors 
+You can check one of the research documents provided for an explanation of each actor .
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/actors.png)
+
+# Context and Objectives
+
+## Key words 
+   - **Service**: Which is one of the programmed services it may be any API that needs data to process such as a **Machine Learning** service that demands customer data at REST to perform clustering or client segmentation and an **Analytics** service that performs data aggregations in order to make a statistical dashboard that helps in decision making etc ... 
    - **Restriction** : It is the order of control of which the subject data is not allowed for any use.
 
-### Context
+## Context
 
 Log data is the information recorded by your application server about when, how, and which visitors are using your website. Application server providers  commonly collect the following information about each user:
   
@@ -46,11 +66,31 @@ Now after **storing** the data for authorization,our application services will t
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/objective.png)
 
-### Objective 
+## Objective 
 
 Our main two goals are to garantee end to end secure data flow in real time  by delivering encrypted logs and  maintaining access control layer built on top of the database with respect to all GDPR constraints. 
 
-### Data partition in MongoDB 
+
+
+
+# Project Architecture 
+
+First of all,at time **T** and event **E** will occur during the normal or malfuncionning of the application and this event record will be stored in a log file in the image below the data source reprensents our application.
+
+Events may be one of the following :
+  - **Transaction**
+  - **Application Error**
+The dataflow manager will be intercepting and ready to process any incoming information to finally merge it to the database.
+
+On the other side, the data protection officer will be managing access control to database by providing a dynamique  token with a limitless life time triggered by a request from any existing service in the enterprise. 
+    
+Once the token is available, the service can get the required data except the ones restricted by the user.
+
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/architecture.png)
+
+# Database Architecture
+
 
 For each service we have authorized customer data, a pipline generates the **View** where all data within it is eligible to use.
 Example : if we have **n** services the number of collections will be **n + 1 policy collection + all data collection**.
@@ -62,21 +102,12 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 </p>
 
 **Autorized Data Format** : 
-- 0 : not allowed to use by service 
-- 1 : allowed to use by service 
+  - 0 : not allowed to use by service 
+  - 1 : allowed to use by service 
 
 <p align="center">
   <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/authorized_data.png" />
 </p>
-
-# Database Architecture
-
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/database_architecture.png)
-
-
-# Project Architecture 
-
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/architecture.png)
 
 
 # Technologies Identification 
@@ -88,7 +119,28 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 
 
 ### Data Flow Manager
- 
+#### Quick Overview of Apache Kafka
+Apache Kafka's concept is very simple and easy to understand,it is essensially a distributed platform for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.
+
+It has these core APIs:
+  - **Producer API**: Applications can publish a stream of records to one or more Kafka topics.
+  - **Consumer API**: Applications can subscribe to topics and process the stream of records produced to them.
+  
+The core abstraction Kafka provides for a stream of records is the **topic**.
+A topic is a category or feed name to which records are published. Topics in Kafka are always multi-subscriber. This means that a topic can have zero, one, or many consumers that subscribe to the data written to it.
+
+For each topic, the Kafka cluster maintains a **partitioned** log like the one showed in the image bellow.
+
+Each partition is an ordered, immutable sequence of records that is continually appended to a structured commit log. The records in the partitions are each assigned a sequential ID number called the offset, that uniquely identifies each record within the partition.
+
+The Kafka cluster also  durably persists all published records, whether they have been consumed using a configurable retention period or not,it’s performance is effectively constant with respect to data size, which means storing data for a long time is not a problem.
+
+
+#### Roles Identification
+  - **Producer:** Any integrated Application
+  - **Consumer:** Kafka Connect 
+  
+  
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_and_zookeeper.png)
            
 
@@ -161,7 +213,7 @@ Kafka connect configuration is already done inside the script **test_rootless.sh
 
 ```
 
-You can clearly see that the connector is confugured as a Sink Connecter by looking to **config** attribute **connector.class**. Here we mentioned one topic which is events and we gave the connector the database **url** and the **collection** to where to transfer 
+You can clearly see that the connector is confugured as a Sink Connecter by looking to **config** attribute **connector.class**. Here we mentioned one topic which is events and we gave the connector the database **url** and the **collection** to where to transfer.
 
 #### Data Factory 
 
