@@ -95,12 +95,18 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
 
-* Before proceeding to run any script or command let's first install requirements :
-  - **Docker** installation :
+* Before proceeding to run any script or command let's first install requirements:
+  **Note** : The script will also add your local machine user to the docker group to be able to run docker without super user privilege because docker uses the Unix sockets for communication other wise it will demand credentials every time you run it. 
+  
+  - **Docker** installation for Linux :
   
     ``  sudo apt-get update``
         
     ``sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin``
+    
+    To verify that Docker is installed on your machine please try to run this command. if every thing is setteled the installation of the image will take effect and the engine will run it then it will exit 
+    
+    ``sudo docker run hello-world``
 
  
 
