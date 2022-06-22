@@ -87,7 +87,7 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 
 
 ### Data Flow Manager
-
+#### Quick Over View of Apache Kafka
 Apache Kafka's concept is very simple and easy to understand,it is essensially a distributed platform that ensures high streaming data flow and folt tolerence by reling on multiple brokers distributed over multiple hosts.
 
 It has these core APIs:
@@ -97,7 +97,7 @@ It has these core APIs:
 The core abstraction Kafka provides for a stream of records is the topic.
 A topic is a category or feed name to which records are published. Topics in Kafka are always multi-subscriber. This means that a topic can have zero, one, or many consumers that subscribe to the data written to it.
 
-Roles Identification:
+#### Roles Identification:
   - **Producer:** Any integrated Application
   - **Consumer:** Kafka Connect 
   
