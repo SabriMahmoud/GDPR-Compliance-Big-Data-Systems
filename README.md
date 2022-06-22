@@ -5,6 +5,14 @@ systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** 
 
 **SUPERVISER :** **Tarek Sghair**
 
+# Table of Contents
+
+1. [Context And Objectives](#context-and-objectives)  
+2. [Project Architecture](#project-archiecture)
+3. [Database Architecture](#database-archiecture)
+4. [Technologies Identification](#technologies-archiecture)
+
+
 # Context and Objectives
 
 ## Key words 
@@ -97,7 +105,7 @@ It has these core APIs:
 The core abstraction Kafka provides for a stream of records is the topic.
 A topic is a category or feed name to which records are published. Topics in Kafka are always multi-subscriber. This means that a topic can have zero, one, or many consumers that subscribe to the data written to it.
 
-#### Roles Identification:
+#### Roles Identification
   - **Producer:** Any integrated Application
   - **Consumer:** Kafka Connect 
   
