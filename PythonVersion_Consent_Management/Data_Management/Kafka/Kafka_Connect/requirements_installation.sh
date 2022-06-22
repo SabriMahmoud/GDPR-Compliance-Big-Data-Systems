@@ -27,5 +27,6 @@ pip install kafka-python
 
 pip install hvac 
 
+sudo apt-get install jq
 
 
