@@ -96,6 +96,7 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
 
 * Before proceeding to run any script or command let's first install requirements:
+
   **Note** : The script will also add your local machine user to the docker group to be able to run docker without super user privilege because docker uses the Unix sockets for communication other wise it will demand credentials every time you run it. 
   
   - **Docker** installation for Linux :
@@ -116,13 +117,22 @@ git clone https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems.git
 cd GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/Kafka_Connect/
 ./test_rootless.sh
 	
-```   
-proceed to **PythonVersion_Consent_Management/Data_Management/Kafka/Kafka_Connect/** directory where you'll find a bash script that do all commands for you
+```
+
+**Note:** If you encounter an error **bash: ./test_rootless.sh Permission denied**  you should give the permision of execution to prevent it from occuring by typing this command 
+
 ```bash
-	  
-```   
+chmod +x ./test_rootless.sh
+```
+
+Otherwise docker containers are invading the host server at this moment let's check the server status.
+ 
 ### Server Status 
 
+You can check whether everythiing is good and compatible with the image below  type this command  
+```bash
+docker ps 
+```
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png)
 
 
