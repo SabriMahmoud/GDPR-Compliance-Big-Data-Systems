@@ -133,7 +133,9 @@ You can check whether everythiing is good and compatible with the image below  t
 ```bash
 docker ps 
 ```
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png)
+<p align="center">
+  <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png" />
+</p>
 
 
 ## Module 1 Data Protection Officier 
