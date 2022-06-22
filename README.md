@@ -7,11 +7,20 @@ systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** 
 
 # Table of Contents
 
-1. [Context And Objectives](#context-and-objectives)  
-2. [Project Architecture](#project-architecture)
-3. [Database Architecture](#database-architecture)
-4. [Technologies Identification](#technologies-identification)
-5. [Project Implementation](#project-implementation)
+1. [Context And Objectives.................................................................................................................................](#context-and-objectives)  
+2. [Project Architecture...................................................................................................................................](#project-architecture)
+3. [Database Architecture..................................................................................................................................](#database-architecture)
+4. [Technologies Identification............................................................................................................................](#technologies-identification)
+5. [Project Implementation.................................................................................................................................](#project-implementation)
+
+# GDPR Over View
+## Principles
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/principles.png)
+
+## Actors 
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/actors.png)
 
 # Context and Objectives
 
