@@ -139,7 +139,8 @@ docker ps
 
 ### Data Factory 
 
-After we setteled the environement and created a kafka topic named **events** it is time to produce some logs.So as to achieve, proceed to   **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/** directory and run **producer.py** 
+After we setteled the environement and created a kafka topic named **events** it is time to produce some logs.So as to achieve, proceed to 
+**GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/** directory and run **producer.py** 
 
 ```!#/bin/sh
 python3 producer.py
