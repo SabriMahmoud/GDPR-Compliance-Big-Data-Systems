@@ -30,9 +30,9 @@ In order to do so **restrictions** to protect customer data from the application
 Here is an example illustrating a scenario for more understanding of the problem:
 
 Let serviceA be one of the mentioned services in the above paragraph
-  - User 1 : The serviceA has a restriction on the last name and the amount of transfer 
-  - User 2 : The serviceA has a restriction on the customer name, the device and the service provided to the user
-  - User 3 : The serviceA has a restriction on the customer name; customer last name and the device 
+  - **User 1** : The serviceA has a restriction on the last name and the amount of transfer 
+  - **User 2** : The serviceA has a restriction on the customer name, the device and the service provided to the user
+  - **User 3** : The serviceA has a restriction on the customer name; customer last name and the device 
 	 
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/context.png)
@@ -91,11 +91,10 @@ Example : if we have **n** services the number of collections will be **n + 1 po
  
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_and_zookeeper.png)
            
-#### Database Sink Connector 
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
 
 * Before proceeding to run any script or command let's first install requirements:
+
   **Note** : The script will also add your local machine user to the docker group to be able to run docker without super user privilege because docker uses the Unix sockets for communication other wise it will demand credentials every time you run it. 
   
   - **Docker** installation for Linux :
@@ -116,14 +115,73 @@ git clone https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems.git
 cd GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/Kafka_Connect/
 ./test_rootless.sh
 	
-```   
-proceed to **PythonVersion_Consent_Management/Data_Management/Kafka/Kafka_Connect/** directory where you'll find a bash script that do all commands for you
+```
+
+**Note:** If you encounter an error **bash: ./test_rootless.sh Permission denied**  you should give the permision of execution to prevent it from occuring by typing this command 
+
 ```bash
-	  
-```   
+chmod +x ./test_rootless.sh
+```
+
+Otherwise docker containers are invading the host server at this moment let's check the server status.
+ 
 ### Server Status 
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png)
+You can check whether everythiing is good and compatible with the image below  type this command  
+```bash
+docker ps 
+```
+<p align="center">
+  <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png" />
+</p>
+
+### Database Sink Connector 
+
+#### Configuration 
+Kafka connect configuration is already done inside the script **test_rootless.sh** that you've runned earlier this is how the configuration looks like
+
+```java
+{
+    "name": "mongo-sink-connector",
+    "config": {
+        "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
+        "tasks.max": "1",
+        "topics": "events",
+        "connection.uri": "mongodb://mongodb:27017/my_events",
+        "database": "my_events",
+        "collection": "kafka_events",
+        "max.num.retries": 5,
+        "mongo.errors.tolerance": "all",
+        "mongo.errors.log.enable": true,
+        "errors.log.include.messages": true,
+        "errors.deadletterqueue.topic.name": "events.deadletter",
+        "errors.deadletterqueue.context.headers.enable": true 
+    }
+}
+
+```
+
+You can clearly see that the connector is confugured as a Sink Connecter by looking to **config** attribute **connector.class**. Here we mentioned one topic which is events and we gave the connector the database **url** and the **collection** to where to transfer 
+
+#### Data Factory 
+
+After we setteled the environement and created a kafka topic named **events** it is time to produce some logs.So as to achieve, proceed to 
+**GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/** directory and run **producer.py**.
+
+```!#/bin/sh
+python3 producer.py
+```
+
+As shown in the image below the producer uses Vault API to encrypt data. you can check **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/encrypt_with_vault.py** to see how the encryption process is done. 
+
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
+
+
+
+
+
+
 
 
 ## Module 1 Data Protection Officier 
