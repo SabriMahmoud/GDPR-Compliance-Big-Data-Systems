@@ -5,13 +5,13 @@ systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** 
 
 **SUPERVISER :** **Tarek Sghair**
 
-## Context and Objectives
+# Context and Objectives
 
-#### Key words 
+## Key words 
    - **Service**: Which is one of the programmed services it may be any API that needs data to process such as a **Machine Learning** service that demands customer data at REST to perform clustering or client segmentation,an **Analytics** service that performs data aggregations in order to make a statistical dashboard that helps in decision making etc ... 
    - **Restriction** : It is the order of control of which the subject data is not allowed for any use.
 
-### Context
+## Context
 
 Log data is the information recorded by your application server about when, how, and which visitors are using your website. Application server providers  commonly collect the following information about each user:
   
@@ -46,11 +46,12 @@ Now after **storing** the data for authorization,our application services will t
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/objective.png)
 
-### Objective 
+## Objective 
 
 Our main two goals are to garantee end to end secure data flow in real time  by delivering encrypted logs and  maintaining access control layer built on top of the database with respect to all GDPR constraints. 
 
-### Data partition in MongoDB 
+# Database Architecture
+
 
 For each service we have authorized customer data, a pipline generates the **View** where all data within it is eligible to use.
 Example : if we have **n** services the number of collections will be **n + 1 policy collection + all data collection**.
@@ -161,7 +162,7 @@ Kafka connect configuration is already done inside the script **test_rootless.sh
 
 ```
 
-You can clearly see that the connector is confugured as a Sink Connecter by looking to **config** attribute **connector.class**. Here we mentioned one topic which is events and we gave the connector the database **url** and the **collection** to where to transfer 
+You can clearly see that the connector is confugured as a Sink Connecter by looking to **config** attribute **connector.class**. Here we mentioned one topic which is events and we gave the connector the database **url** and the **collection** to where to transfer.
 
 #### Data Factory 
 
