@@ -70,8 +70,8 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 </p>
 
 **Autorized Data Format** : 
-- 0 : not allowed to use by service 
-- 1 : allowed to use by service 
+  - 0 : not allowed to use by service 
+  - 1 : allowed to use by service 
 
 <p align="center">
   <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/authorized_data.png" />
@@ -87,7 +87,21 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 
 
 ### Data Flow Manager
- 
+
+Apache Kafka's concept is very simple and easy to understand,it is essensially a distributed platform that ensures high streaming data flow and folt tolerence by reling on multiple brokers distributed over multiple hosts.
+
+It has these core APIs:
+  - **Producer API**: Applications can publish a stream of records to one or more Kafka topics.
+  - **Consumer API**: Applications can subscribe to topics and process the stream of records produced to them.
+  
+The core abstraction Kafka provides for a stream of records is the topic.
+A topic is a category or feed name to which records are published. Topics in Kafka are always multi-subscriber. This means that a topic can have zero, one, or many consumers that subscribe to the data written to it.
+
+Roles Identification:
+  - **Producer:** Any integrated Application
+  - **Consumer:** Kafka Connect 
+  
+  
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_and_zookeeper.png)
            
 
