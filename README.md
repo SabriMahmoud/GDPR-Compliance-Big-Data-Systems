@@ -134,8 +134,33 @@ docker ps
 <p align="center">
   <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png" />
 </p>
-#### Database Sink Connector 
+### Database Sink Connector 
 
+#### Configuration 
+Kafka connect configuration is already done inside the script **test_rootless.sh** that you've runned earlier this is how the configuration looks like
+
+```java
+{
+    "name": "mongo-sink-connector",
+    "config": {
+        "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
+        "tasks.max": "1",
+        "topics": "events",
+        "connection.uri": "mongodb://mongodb:27017/my_events",
+        "database": "my_events",
+        "collection": "kafka_events",
+        "max.num.retries": 5,
+        "mongo.errors.tolerance": "all",
+        "mongo.errors.log.enable": true,
+        "errors.log.include.messages": true,
+        "errors.deadletterqueue.topic.name": "events.deadletter",
+        "errors.deadletterqueue.context.headers.enable": true 
+    }
+}
+
+```
+
+#### Data Factory 
 After we setteled the environement and created a kafka topic named **events** it is time to produce some logs.So as to achieve, proceed to 
 **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/** directory and run **producer.py**.
 
@@ -147,7 +172,7 @@ As shown in the image below the producer uses Vault API to encrypt data. you can
 
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
-### Data Factory 
+
 
 
 
