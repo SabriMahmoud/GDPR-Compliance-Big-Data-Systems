@@ -91,9 +91,7 @@ Example : if we have **n** services the number of collections will be **n + 1 po
  
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_and_zookeeper.png)
            
-#### Database Sink Connector 
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
 
 * Before proceeding to run any script or command let's first install requirements:
 
@@ -136,15 +134,24 @@ docker ps
 <p align="center">
   <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png" />
 </p>
-
-### Data Factory 
+#### Database Sink Connector 
 
 After we setteled the environement and created a kafka topic named **events** it is time to produce some logs.So as to achieve, proceed to 
-**GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/** directory and run **producer.py** 
+**GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/** directory and run **producer.py**.
 
 ```!#/bin/sh
 python3 producer.py
 ```
+
+As shown in the image below the producer uses Vault API to encrypt data. you can check **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/encrypt_with_vault.py** to see how the encryption process is done. 
+
+
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
+### Data Factory 
+
+
+
+
 
 
 
