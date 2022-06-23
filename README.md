@@ -28,7 +28,7 @@ You can check one of the research documents provided for an explanation of each 
 # Context and Objectives
 
 ## Key words 
-   - **Service**: Which is one of the programmed services it may be any API that needs data to process such as a **Machine Learning** service that demands customer data at REST to perform clustering or client segmentation and an **Analytics** service that performs data aggregations in order to make a statistical dashboard that helps in decision making etc ... 
+   - **Service**: Which is one of the programmed services it may be any of the enterprise application built API that needs data to process such as a **Machine Learning** service that demands customer data at REST to perform clustering or client segmentation and an **Analytics** service that performs data aggregations in order to make a statistical dashboard that helps in decision making etc ... 
    - **Restriction** : It is the order of control of which the subject data is not allowed for any use.
 
 ## Context
@@ -37,52 +37,53 @@ Log data is the information recorded by your application server about when, how,
   
   - **IP address and device identifier**: This is the unique identifying address broadcasted by the browser or device by which each user is accessing your online platform.
   - **Request date/time**: The specific date and time of each action the user takes.
-  - **Personal details**: Including the full name of a user ,identity number and password.
+  - **Personal details**: Including the full name of a user, identity number, and password.
   - **Device**: Whether the user is connected from a web or mobile application.
   - **Transaction Amount**: The amount of a triggered  transaction process.
-  - **Service**: The service provided by the application .
+  - **Service**: The service provided by the application.
 
-It is trivial to ignore the **sensitivity** and the **privacy** of the logs generated, a GDPR based application contains the necessary components stacked in layers in order to build a **trusted** application and ensure **confidentiality** by providing all users the ability to **control** all data usage except the ones of which needed for server or application required operations.
+It is trivial to ignore the **sensitivity** and the **privacy** of the logs generated, a GDPR-based application contains the necessary components stacked in layers in order to build a **trusted** application and ensure **confidentiality** by providing all users the ability to **control** all data usage except the ones of which needed for server or application required operations.
 
-In order to do so **restrictions** to protect customer data from the application services must be provided to **choose** **who**(Service?) is allowed and **which**(attribute?) data to consume in processing.All restrictions will be stored in a database for further needs.
+In order to do so, **restrictions** to protect customer data from the application services must be provided to **choose** **who**(Service?) is allowed and **which**(attribute?) data to consume in processing. All restrictions will be stored in a database for further needs.
 
 
 Here is an example illustrating a scenario for more understanding of the problem:
 
 Let serviceA be one of the mentioned services in the above paragraph
-  - **User 1** : The serviceA has a restriction on the last name and the amount of transfer 
-  - **User 2** : The serviceA has a restriction on the customer name, the device and the service provided to the user
-  - **User 3** : The serviceA has a restriction on the customer name; customer last name and the device 
+  - **User 1**: The serviceA has a restriction on the last name and the amount of transfer 
+  - **User 2**: The serviceA has a restriction on the customer name, the device, and the service provided to the user
+  - **User 3**: The serviceA has a restriction on the customer name; customer last name and the device 
 	 
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/context.png)
 
 
 
-Now after **storing** the data for authorization,our application services will try to **proccess** it, the **scenario** is like the following: 
+Now after **storing** the data for authorization, our application services will try to **process** it, the **scenario** is like the following: 
 
-- **Request** : The service will try to get the required data (user1 in the example) from the database. 
-- **Response** : The response must contain only the authorized data of the required customers.
+- **Request**: The service will try to get the required data (user1 in the example) from the database. 
+- **Response**: The response must contain only the authorized data of the required customers.
 
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/objective.png)
 
 ## Objective 
 
-Our main two goals are to garantee end to end secure data flow in real time  by delivering encrypted logs and  maintaining access control layer built on top of the database with respect to all GDPR constraints. 
+Our two primary objectives are to guarantee secure, end-to-end, real-time data flow  by delivering encrypted logs and  maintaining an access control layer built on top of the database with respect to all GDPR constraints. 
 
 
 
 
 # Project Architecture 
 
-First of all,at time **T** and event **E** will occur during the normal or malfuncionning of the application and this event record will be stored in a log file in the image below the data source reprensents our application.
+First of all,at a time **T** and event **E** will occur during the normal or the malfunctioning of the application and this event record will be stored in a log file in the image below the data source representing our application.
 
 Events may be one of the following :
   - **Transaction**
   - **Application Error**
-The dataflow manager will be intercepting and ready to process any incoming information to finally merge it to the database.
+  
+The data flow manager will be intercepting and ready to process any incoming information to finally merge it into the database.
 
-On the other side, the data protection officer will be managing access control to database by providing a dynamique  token with a limitless life time triggered by a request from any existing service in the enterprise. 
+On the other side, the data protection officer will be managing access control to the database by providing a dynamic  token with a limitless lifetime triggered by a request from any existing service in the enterprise. 
     
 Once the token is available, the service can get the required data except the ones restricted by the user.
 
@@ -92,8 +93,8 @@ Once the token is available, the service can get the required data except the on
 # Database Architecture
 
 
-For each service we have authorized customer data, a pipline generates the **View** where all data within it is eligible to use.
-Example : if we have **n** services the number of collections will be **n + 1 policy collection + all data collection**.
+For each service we have authorized customer data, a pipeline generates the **View** where all data within it is eligible to use.
+For example: if we have **n** services the number of collections will be **n + 1 policy collection + all data collection**.
  
 
 
@@ -120,7 +121,7 @@ Example : if we have **n** services the number of collections will be **n + 1 po
 
 ### Data Flow Manager
 #### Quick Overview of Apache Kafka
-Apache Kafka's concept is very simple and easy to understand,it is essensially a distributed platform for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.
+Apache Kafka's concept is very simple and easy to understand, it is essentially a distributed platform for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.
 
 It has these core APIs:
   - **Producer API**: Applications can publish a stream of records to one or more Kafka topics.
@@ -129,7 +130,7 @@ It has these core APIs:
 The core abstraction Kafka provides for a stream of records is the **topic**.
 A topic is a category or feed name to which records are published. Topics in Kafka are always multi-subscriber. This means that a topic can have zero, one, or many consumers that subscribe to the data written to it.
 
-For each topic, the Kafka cluster maintains a **partitioned** log like the one showed in the image bellow.
+For each topic, the Kafka cluster maintains a **partitioned** log like the one shown in the image below.
 
 Each partition is an ordered, immutable sequence of records that is continually appended to a structured commit log. The records in the partitions are each assigned a sequential ID number called the offset, that uniquely identifies each record within the partition.
 
@@ -145,9 +146,9 @@ The Kafka cluster also  durably persists all published records, whether they hav
            
 
 
-* Before proceeding to run any script or command let's first install requirements:
+* Before proceeding to run any script or command let's first install the requirements:
 
-  **Note** : The script will also add your local machine user to the docker group to be able to run docker without super user privilege because docker uses the Unix sockets for communication other wise it will demand credentials every time you run it. 
+  **Note**: The script will also add your local machine user to the docker group to be able to run docker without super user privilege because docker uses the Unix sockets for communication other wise it will demand credentials every time you run it. 
   
   - **Docker** installation for Linux :
   
