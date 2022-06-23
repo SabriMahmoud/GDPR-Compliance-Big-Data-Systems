@@ -259,7 +259,7 @@ db.kakfa_events.find()
 ```
 
 *1. **Use MongoDB compass**
-you can follow this link on how to install MongoDB compass : ![Installation](https://www.mongodb.com/docs/compass/current/install/) 
+you can follow this link on how to install MongoDB compass : [Installation](https://www.mongodb.com/docs/compass/current/install/) 
 
 Now we are happy that we did the job correctly as you can the data was delivered securly encrypted with vault, we can move on tho the second module.
 
