@@ -1,3 +1,5 @@
+
+
 # GDPR Compliance BigData Systems 
 
 This projects aims at implementing a solution for the European Data Protection Regulation, the research paper **A framework for GDPR compliance in Big Data
@@ -12,6 +14,8 @@ systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** 
 3. [Database Architecture](#database-architecture)
 4. [Technologies Identification](#technologies-identification)
 5. [Project Implementation](#project-implementation)
+6. [Running The First  Module](#running-module-1)
+6. [Running The Second  Module](#running-module-2)
 
 # GDPR Overview
 ## Principles
@@ -165,7 +169,31 @@ ZooKeeper is used in distributed systems for service synchronization and as a na
 
  
 
-# Running The Project
+
+## Module 2 Data Protection Officier 
+
+
+**Admin** : Application admin 
+
+**Clients** : FLASK Services 
+
+**MongoDB** : Application Data Base contains users and Application Data 
+
+
+
+
+
+![alt text](https://mktg-content-api-hashicorp.vercel.app/api/assets?product=tutorials&version=main&asset=public%2Fimg%2Fvault%2Fvault-mongodb.png)
+
+**Note:** when the service access the DB with the provided token the only collection that will be visible is the authorized one which is the View in our case.
+
+
+
+
+
+
+
+# Running Module 1  
 
 * Before proceeding to run any script or command let's first install the requirements by running **requirements_installation.sh** :
 
@@ -182,7 +210,12 @@ cd GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Manage
 To make the project up and running clone the repository and run the **test_rootless.sh** script by typing these commands .
 
 **Note**: 
-   - The script will configure everything from configuration to producing encrypted data 
+   - The script will get our docker containers up and running in the server
+   - Download the MongoDB connect Plugin
+   - Copy the Plugin inside the connect container
+   - Create Kafka topics 
+   - Configure the MongoDB Sink connectors
+   - Produce test data 
 
 ```bash
 ./test_rootless.sh
@@ -220,9 +253,9 @@ Kafka connect configuration is already done inside the script **test_rootless.sh
         "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
         "tasks.max": "1",
         "topics": "events",
-        "connection.uri": "mongodb://mongodb:27017/my_events",
-        "database": "my_events",
-        "collection": "kafka_events",
+        "connection.uri": "mongodb://mongodb:27017/Bankerise",
+        "database": "Bakerise",
+        "collection": "AppUsers",
         "max.num.retries": 5,
         "mongo.errors.tolerance": "all",
         "mongo.errors.log.enable": true,
@@ -272,11 +305,11 @@ mongo
 Inside the mongo shell run these commands 
 
 ```!#/bin/sh
-use my_events
+use Bankerise
 ```
 
 ```!#/bin/sh
-db.kakfa_events.find()
+db.AppUsers.find()
 ```
 
 **2. Use MongoDB compass**
@@ -286,26 +319,7 @@ Now we are happy that we did the job correctly as you can the data was delivered
 
 
 
-## Module 1 Data Protection Officier 
-
-
-**Admin** : Application admin 
-
-**Clients** : FLASK Services 
-
-**MongoDB** : Application Data Base contains users and Application Data 
-
-
-
-
-
-![alt text](https://mktg-content-api-hashicorp.vercel.app/api/assets?product=tutorials&version=main&asset=public%2Fimg%2Fvault%2Fvault-mongodb.png)
-
-**Note:** when the service access the DB with the provided token the only collection that will be visible is the authorized one which is the View in our case.
-
-
-
-### Steps to run Module 2 properly 
+# Running Module 2
 
 
 Before running the Spring Boot Application  there are two steps that you need to perform 
