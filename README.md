@@ -288,7 +288,7 @@ As shown in the image below the producer uses Vault API to encrypt data. you can
 
 To verify that data was delivered as planned you can either access MongoDB container or use the MongoDB compass GUI 
 
-***1. **Access MongoDB container**
+**1. Access MongoDB container**
 
 open a new terminal and run this command
 
@@ -334,6 +334,53 @@ Before running the Spring Boot Application  there are two steps that you need to
 
 ``docker run -d -p 0.0.0.0:27017:27017 --name=mongodb -e MONGO_INITDB_ROOT_USERNAME="mdbadmin" -e MONGO_INITDB_ROOT_PASSWORD="hQ97T9JJKZoqnFn2NXE" mongo
 ``
+```python
+command = [
+            {
+                "$lookup":{ "from": "UsersPolicy","let": { "id_u": "$id"},
+                "pipeline":[
+                        { 
+                            "$match":{
+                                "$expr":{
+                                    "$and":[
+                                        {
+                                            "$eq": [ "$id",  "$$id_u" ] 
+                                        }
+                                    ]
+                                }
+                            }
+                        }],"as": "same_id"
+                }
+            },
+    		{
+                "$replaceRoot": {
+                     "newRoot": {
+                         "$mergeObjects": [ 
+                            { "$arrayElemAt": [ "$same_id", 0 ] },
+                            "$$ROOT" 
+                            ]
+                      } 
+                }
+            },
+            { 
+                "$project": {
+                     "same_id": 0
+                } 
+            },
+			{ "$project" : {  
+					"id": 1,
+					"first_name" : {"$cond": [{"$eq": ['$use_first_name', 1]},"$first_name","$$REMOVE" ]} , 
+					"last_name" : {"$cond": [{"$eq": ['$use_last_name',1]},"$last_name" ,"$$REMOVE"]},  
+					"email" : {"$cond": [{"$eq": ['$use_email', 1]}, "$email" ,"$$REMOVE"]} ,  
+					"gender" : {"$cond": [{"$eq": ['$use_gender',1]},"$gender","$$REMOVE"]},  
+					"ip_address" : {"$cond": [{"$eq": ['$use_ip_address', 1]},"$ip_address","$$REMOVE" ]}, 
+					"transfert_amount" : {"$cond": [{"$eq": ['$use_transfert_amount',1]},"$transfert_amount" ,"$$REMOVE" ]},
+                    "date":1
+			    }
+            }
+        ]
+```
+
 
 **Note** : 
 

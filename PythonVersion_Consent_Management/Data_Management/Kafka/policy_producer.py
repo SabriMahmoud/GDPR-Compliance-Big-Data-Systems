@@ -30,7 +30,7 @@ def read_from_data_source(file_name):
         data = json.load(data_source)
     return data 
 
-data = read_from_data_source('PythonVersion_Consent_Management/Data_Management/Kafka/Policy.json')
+data = read_from_data_source('./Policy.json')
 
 
 
