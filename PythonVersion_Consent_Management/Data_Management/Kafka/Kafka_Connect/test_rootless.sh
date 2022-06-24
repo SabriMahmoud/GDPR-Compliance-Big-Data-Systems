@@ -4,11 +4,10 @@ echo "================================================="
 echo "Starting Docker Container........"
 
 
-sudo docker-compose up -d
+docker-compose up -d
 
 sleep 5 
 
-docker run --name vault -d --cap-add=IPC_LOCK -e 'VAULT_DEV_ROOT_TOKEN=myroot' -e 'VAULT_DEV_LISTEN_ADRESS=0.0.0.0:8200' -P 8200:8200 vault
 
 echo "Downloading Connect plugin......."
 
@@ -28,7 +27,7 @@ echo "================================================="
 echo "Copying the plugin inside connect container......."
 
 
-sudo docker cp mongodb-kafka-connect-mongodb-1.6.0 connect:/usr/share/java/
+docker cp mongodb-kafka-connect-mongodb-1.6.0 connect:/usr/share/java/
 sleep 5
 sudo docker restart connect
 sudo docker ps
@@ -46,6 +45,10 @@ echo "================================================="
 
 python3 ../create_kafka_topics.py -t events-events.deadletter -p 3-3
 
+sleep 10 
+
+python3 ../create_kafka_topics.py -t policyevents-policyevents.deadletter -p 3-3
+
 sleep 20
 
 curl --request POST --retry 50 --retry-all-errors --retry-delay 5 --fail   --url http://localhost:8083/connectors   --header 'Content-Type: application/json'   --data '{
@@ -54,9 +57,9 @@ curl --request POST --retry 50 --retry-all-errors --retry-delay 5 --fail   --url
         "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
         "tasks.max": "1",
         "topics": "events",
-        "connection.uri": "mongodb://mongodb:27017/my_events",
-        "database": "my_events",
-        "collection": "kafka_events",
+        "connection.uri": "mongodb://mongodb:27017/Bankerise",
+        "database": "Bankerise",
+        "collection": "AppUsers",
         "max.num.retries": 5,
         "mongo.errors.tolerance": "all",
         "mongo.errors.log.enable": true,
@@ -66,11 +69,34 @@ curl --request POST --retry 50 --retry-all-errors --retry-delay 5 --fail   --url
     }
 }'
 
-sleep 20
+sleep 10
+
+curl --request POST --retry 50 --retry-all-errors --retry-delay 5 --fail   --url http://localhost:8083/connectors   --header 'Content-Type: application/json'   --data '{
+    "name": "mongo-sink-policy-connector",
+    "config": {
+        "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
+        "tasks.max": "1",
+        "topics": "policyevents",
+        "connection.uri": "mongodb://mongodb:27017/Bankerise",
+        "database": "Bankerise",
+        "collection": "UsersPolicy",
+        "max.num.retries": 5,
+        "mongo.errors.tolerance": "all",
+        "mongo.errors.log.enable": true,
+        "errors.log.include.messages": true,
+        "errors.deadletterqueue.topic.name": "policyevents.deadletter",
+        "errors.deadletterqueue.context.headers.enable": true 
+    }
+}'
+
+
+
 
 echo " "
 
 echo "================================================="
+
+echo "Checking for existing connectors"
 
 
 curl -s -X GET http://localhost:8083/connectors
@@ -79,6 +105,9 @@ sleep 10
 echo " "
 
 echo "================================================="
+
+echo "Checking for MongoDB Sink Connector status"
+
 
 curl -s -X GET http://localhost:8083/connectors/mongo-sink-connector/tasks/0/status | jq
 echo " "

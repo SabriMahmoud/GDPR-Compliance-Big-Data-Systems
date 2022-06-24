@@ -102,7 +102,7 @@ For example: if we have **n** services the number of collections will be **n + 1
   <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/dataPartition.png" />
 </p>
 
-**Autorized Data Format** : 
+**Authorized Data Format** : 
   - 0 : not allowed to use by service 
   - 1 : allowed to use by service 
 
@@ -120,7 +120,7 @@ For example: if we have **n** services the number of collections will be **n + 1
 
 
 ### Data Flow Manager
-#### Quick Overview of Apache Kafka
+####  Apache Kafka Quick Overview
 Apache Kafka's concept is very simple and easy to understand, it is essentially a distributed platform for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.
 
 It has these core APIs:
@@ -143,8 +143,29 @@ The Kafka cluster also  durably persists all published records, whether they hav
   
   
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_and_zookeeper.png)
-           
+  
+#### Zookeeper Quick Overveiw   
 
+For now, Kafka services cannot be used in production without first installing ZooKeeper. * This is true even if your use case requires just a single broker, single topic, and single partition.
+
+For any distributed system, there needs to be a way to coordinate tasks.  Kafka is a distributed system that was built to use ZooKeeper.  However, other technologies like Elasticsearch and MongoDB have their own built-in mechanisms for coordinating tasks.
+
+ZooKeeper has five primary functions.  Specifically, ZooKeeper is used for controller election, cluster membership, topic configuration, access control lists, and quotas.
+
+ - **1. Controller Election**.  The controller is the broker responsible for maintaining the leader/follower relationship for all partitions.  If ever a node shuts down, ZooKeeper ensures that other replicas take up the role of partition leaders replacing the partition leaders in the node that is shutting down.
+
+ - **2. Cluster Membership**.  ZooKeeper keeps a list of all functioning brokers in the cluster.
+
+ - **3. Topic Configuration**.  ZooKeeper maintains the configuration of all topics, including the list of existing topics, number of partitions for each topic, location of the replicas, configuration overrides for topics, preferred leader node, among other details.
+
+ - **4. Access Control Lists (ACLs)**.  ZooKeeper also maintains the ACLs for all topics.  This includes who or what is allowed to read/write to each topic, list of consumer groups, members of the groups, and the most recent offset each consumer group received from each partition.
+
+ - **5. Quotas**.  ZooKeeper accesses how much data each client is allowed to read/write.        
+ZooKeeper is used in distributed systems for service synchronization and as a naming registry.  When working with Apache Kafka, ZooKeeper is primarily used to track the status of nodes in the Kafka cluster and maintain a list of Kafka topics and messages. 
+
+ 
+
+# Running The Project
 
 * Before proceeding to run any script or command let's first install the requirements by running **requirements_installation.sh** :
 
@@ -234,7 +255,7 @@ As shown in the image below the producer uses Vault API to encrypt data. you can
 
 To verify that data was delivered as planned you can either access MongoDB container or use the MongoDB compass GUI 
 
-*1. **Access MongoDB container**
+***1. **Access MongoDB container**
 
 open a new terminal and run this command
 
@@ -258,7 +279,7 @@ use my_events
 db.kakfa_events.find()
 ```
 
-*1. **Use MongoDB compass**
+**2. Use MongoDB compass**
 you can follow this link on how to install MongoDB compass : [Installation](https://www.mongodb.com/docs/compass/current/install/) 
 
 Now we are happy that we did the job correctly as you can the data was delivered securly encrypted with vault, we can move on tho the second module.

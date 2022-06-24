@@ -71,3 +71,19 @@ services:
       - connect
     ports:
       - 27017:27017
+  vault:
+    image: vault:latest
+    restart: always
+    volumes:
+      - /vault/data
+      - /etc/vault/logs
+    ports:
+      - 8200:8200
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: 'myroot'
+      VAULT_DEV_LISTEN_ADDRESS: '0.0.0.0:8200'
+    cap_add:
+      - IPC_LOCK
+    container_name: vault
+    entrypoint: "vault server -dev"
+
