@@ -321,64 +321,145 @@ Now we are happy that we did the job correctly as you can the data was delivered
 
 # Running Module 2
 
+## Build Flask Docker Image
 
-Before running the Spring Boot Application  there are two steps that you need to perform 
-- **1** : start Vault Docker container using this command 
+Vault and MongoDB containers are already running in server the final step is to create the Flask docker image and run the container.
+Proceed tro **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/FlaskApi/** and run the **create_flask_image.sh**
 
+```!#/bin/sh
+./create_flask_image.sh
 
-``docker run  --net BigData --name vault1 -d --cap-add=IPC_LOCK
--e 'VAULT_DEV_ROOT_TOKEN_ID=myroot' -e 'VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200' 
--p 8200:8200 vault``
+```
 
-- **2** : start Mongodb container using this command 
+## MongoDB  View Creation
 
-``docker run -d -p 0.0.0.0:27017:27017 --name=mongodb -e MONGO_INITDB_ROOT_USERNAME="mdbadmin" -e MONGO_INITDB_ROOT_PASSWORD="hQ97T9JJKZoqnFn2NXE" mongo
 ``
 ```python
 command = [
+   {
+      "$lookup":{
+         "from":"UsersPolicy",
+         "let":{
+            "id_u":"$id"
+         },
+         "pipeline":[
             {
-                "$lookup":{ "from": "UsersPolicy","let": { "id_u": "$id"},
-                "pipeline":[
-                        { 
-                            "$match":{
-                                "$expr":{
-                                    "$and":[
-                                        {
-                                            "$eq": [ "$id",  "$$id_u" ] 
-                                        }
-                                    ]
-                                }
-                            }
-                        }],"as": "same_id"
-                }
-            },
-    		{
-                "$replaceRoot": {
-                     "newRoot": {
-                         "$mergeObjects": [ 
-                            { "$arrayElemAt": [ "$same_id", 0 ] },
-                            "$$ROOT" 
-                            ]
-                      } 
-                }
-            },
-            { 
-                "$project": {
-                     "same_id": 0
-                } 
-            },
-			{ "$project" : {  
-					"id": 1,
-					"first_name" : {"$cond": [{"$eq": ['$use_first_name', 1]},"$first_name","$$REMOVE" ]} , 
-					"last_name" : {"$cond": [{"$eq": ['$use_last_name',1]},"$last_name" ,"$$REMOVE"]},  
-					"email" : {"$cond": [{"$eq": ['$use_email', 1]}, "$email" ,"$$REMOVE"]} ,  
-					"gender" : {"$cond": [{"$eq": ['$use_gender',1]},"$gender","$$REMOVE"]},  
-					"ip_address" : {"$cond": [{"$eq": ['$use_ip_address', 1]},"$ip_address","$$REMOVE" ]}, 
-					"transfert_amount" : {"$cond": [{"$eq": ['$use_transfert_amount',1]},"$transfert_amount" ,"$$REMOVE" ]},
-                    "date":1
-			    }
+               "$match":{
+                  "$expr":{
+                     "$and":[
+                        {
+                           "$eq":[
+                              "$id",
+                              "$$id_u"
+                           ]
+                        }
+                     ]
+                  }
+               }
             }
-        ]
+         ],
+         "as":"same_id"
+      }
+   },
+   {
+      "$replaceRoot":{
+         "newRoot":{
+            "$mergeObjects":[
+               {
+                  "$arrayElemAt":[
+                     "$same_id",
+                     0
+                  ]
+               },
+               "$$ROOT"
+            ]
+         }
+      }
+   },
+   {
+      "$project":{
+         "same_id":0
+      }
+   },
+   {
+      "$project":{
+         "id":1,
+         "first_name":{
+            "$cond":[
+               {
+                  "$eq":[
+                     "$use_first_name",
+                     1
+                  ]
+               },
+               "$first_name",
+               "$$REMOVE"
+            ]
+         },
+         "last_name":{
+            "$cond":[
+               {
+                  "$eq":[
+                     "$use_last_name",
+                     1
+                  ]
+               },
+               "$last_name",
+               "$$REMOVE"
+            ]
+         },
+         "email":{
+            "$cond":[
+               {
+                  "$eq":[
+                     "$use_email",
+                     1
+                  ]
+               },
+               "$email",
+               "$$REMOVE"
+            ]
+         },
+         "gender":{
+            "$cond":[
+               {
+                  "$eq":[
+                     "$use_gender",
+                     1
+                  ]
+               },
+               "$gender",
+               "$$REMOVE"
+            ]
+         },
+         "ip_address":{
+            "$cond":[
+               {
+                  "$eq":[
+                     "$use_ip_address",
+                     1
+                  ]
+               },
+               "$ip_address",
+               "$$REMOVE"
+            ]
+         },
+         "transfert_amount":{
+            "$cond":[
+               {
+                  "$eq":[
+                     "$use_transfert_amount",
+                     1
+                  ]
+               },
+               "$transfert_amount",
+               "$$REMOVE"
+            ]
+         },
+         "date":1
+      }
+   }
+]
 ```
 
 
