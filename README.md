@@ -102,7 +102,7 @@ For example: if we have **n** services the number of collections will be **n + 1
   <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/dataPartition.png" />
 </p>
 
-**Autorized Data Format** : 
+**Authorized Data Format** : 
   - 0 : not allowed to use by service 
   - 1 : allowed to use by service 
 
@@ -120,7 +120,7 @@ For example: if we have **n** services the number of collections will be **n + 1
 
 
 ### Data Flow Manager
-#### Quick Overview of Apache Kafka
+####  Apache Kafka Quick Overview
 Apache Kafka's concept is very simple and easy to understand, it is essentially a distributed platform for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.
 
 It has these core APIs:
@@ -143,31 +143,49 @@ The Kafka cluster also  durably persists all published records, whether they hav
   
   
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_and_zookeeper.png)
-           
-
-
-* Before proceeding to run any script or command let's first install the requirements:
-
-  **Note**: The script will also add your local machine user to the docker group to be able to run docker without super user privilege because docker uses the Unix sockets for communication other wise it will demand credentials every time you run it. 
   
-  - **Docker** installation for Linux :
-  
-    ``  sudo apt-get update``
-        
-    ``sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin``
-    
-    To verify that Docker is installed on your machine please try to run this command. if every thing is setteled the installation of the image will take effect and the engine will run it then it will exit 
-    
-    ``sudo docker run hello-world``
+#### Zookeeper Quick Overveiw   
+
+For now, Kafka services cannot be used in production without first installing ZooKeeper. * This is true even if your use case requires just a single broker, single topic, and single partition.
+
+For any distributed system, there needs to be a way to coordinate tasks.  Kafka is a distributed system that was built to use ZooKeeper.  However, other technologies like Elasticsearch and MongoDB have their own built-in mechanisms for coordinating tasks.
+
+ZooKeeper has five primary functions.  Specifically, ZooKeeper is used for controller election, cluster membership, topic configuration, access control lists, and quotas.
+
+ - **1. Controller Election**.  The controller is the broker responsible for maintaining the leader/follower relationship for all partitions.  If ever a node shuts down, ZooKeeper ensures that other replicas take up the role of partition leaders replacing the partition leaders in the node that is shutting down.
+
+ - **2. Cluster Membership**.  ZooKeeper keeps a list of all functioning brokers in the cluster.
+
+ - **3. Topic Configuration**.  ZooKeeper maintains the configuration of all topics, including the list of existing topics, number of partitions for each topic, location of the replicas, configuration overrides for topics, preferred leader node, among other details.
+
+ - **4. Access Control Lists (ACLs)**.  ZooKeeper also maintains the ACLs for all topics.  This includes who or what is allowed to read/write to each topic, list of consumer groups, members of the groups, and the most recent offset each consumer group received from each partition.
+
+ - **5. Quotas**.  ZooKeeper accesses how much data each client is allowed to read/write.        
+ZooKeeper is used in distributed systems for service synchronization and as a naming registry.  When working with Apache Kafka, ZooKeeper is primarily used to track the status of nodes in the Kafka cluster and maintain a list of Kafka topics and messages. 
 
  
 
-To make the project up and running clone the repository and run the **test_rootless.sh** script by typing these commands .
+# Running The Project
+
+* Before proceeding to run any script or command let's first install the requirements by running **requirements_installation.sh** :
+
+  **Note**: 
+   - The script will also add your local machine user to the docker group to be able to run docker without super user privilege because docker uses the Unix sockets for communication other wise it will demand credentials every time you run it .
+   - during installation always proceed with yes  
+
 ```bash
 git clone https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems.git
 cd GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/Kafka_Connect/
+./requirements_installation.sh
+```
+
+To make the project up and running clone the repository and run the **test_rootless.sh** script by typing these commands .
+
+**Note**: 
+   - The script will configure everything from configuration to producing encrypted data 
+
+```bash
 ./test_rootless.sh
-	
 ```
 
 **Note:** If you encounter an error **bash: ./test_rootless.sh Permission denied**  you should give the permision of execution to prevent it from occuring by typing this command 
@@ -180,13 +198,15 @@ Otherwise docker containers are invading the host server at this moment let's ch
  
 ### Server Status 
 
-You can check whether everythiing is good and compatible with the image below  type this command  
+You can check whether everythiing is good and compatible with the image below  type this command .
 ```bash
 docker ps 
 ```
 <p align="center">
   <img src="https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/server_status.png" />
 </p>
+
+ If everything looks good let's see the MongoDB Sink connector configuration.
 
 ### Database Sink Connector 
 
@@ -221,6 +241,8 @@ You can clearly see that the connector is confugured as a Sink Connecter by look
 After we setteled the environement and created a kafka topic named **events** it is time to produce some logs.So as to achieve, proceed to 
 **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/** directory and run **producer.py**.
 
+
+
 ```!#/bin/sh
 python3 producer.py
 ```
@@ -231,9 +253,36 @@ As shown in the image below the producer uses Vault API to encrypt data. you can
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
 
 
+To verify that data was delivered as planned you can either access MongoDB container or use the MongoDB compass GUI 
 
+***1. **Access MongoDB container**
 
+open a new terminal and run this command
 
+```!#/bin/sh
+sudo docker exec -it mongodb /bin/sh 
+```
+
+to open the shell command line  run this command 
+
+```!#/bin/sh
+mongo
+```
+
+Inside the mongo shell run these commands 
+
+```!#/bin/sh
+use my_events
+```
+
+```!#/bin/sh
+db.kakfa_events.find()
+```
+
+**2. Use MongoDB compass**
+you can follow this link on how to install MongoDB compass : [Installation](https://www.mongodb.com/docs/compass/current/install/) 
+
+Now we are happy that we did the job correctly as you can the data was delivered securly encrypted with vault, we can move on tho the second module.
 
 
 

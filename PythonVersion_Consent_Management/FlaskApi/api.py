@@ -15,7 +15,11 @@ from vault_security.vault_configuration import VaultConfiguration
 """***************************************************"""
 
 app = Flask(__name__)
-vault = VaultConfiguration(url = 'http://vault:8200' ,token = 'myroot')
+try:
+  vault = VaultConfiguration(url = 'http://vault:8200' ,token = 'myroot')
+except Exception as e:
+  print(e,flush=True)
+
 database = MongoEngine()
 database_name ="Bankerise"
 
@@ -47,11 +51,10 @@ def getUsers(service_name):
 """***************************************************"""
 
 def connectToDataBase(serviceName):
-    serviceUserName,servicePassword = vault.retrieveCredentials(serviceName)
-    DB_URI = "mongodb://"+ serviceUserName + ":" +servicePassword + "@mongodb3:27017/" + database_name
-    app.config["MONGODB_HOST"] = DB_URI
-    database.init_app(app)      
-
+      serviceUserName,servicePassword = vault.retrieveCredentials(serviceName)
+      DB_URI = "mongodb://"+ serviceUserName + ":" +servicePassword + "@mongodb3:27017/" + database_name
+      app.config["MONGODB_HOST"] = DB_URI
+      database.init_app(app)      
 
 """***************************************************"""
 """***************************************************"""
