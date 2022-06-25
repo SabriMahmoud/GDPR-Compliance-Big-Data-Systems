@@ -37,6 +37,7 @@ def read_from_data_source(file_name):
     return data 
 def encrypt_dict(row):
     for key in row.keys():
+      if key!="id" and key!="date":
         plaintext = row[key]
         EDU.encryptData("bankerise_key",str(plaintext))
         row[key] = EDU.ciphertext

@@ -64,6 +64,9 @@ services:
       
   mongodb:
     image: mongo:4.2-rc-bionic
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mdbadmin
+      - MONGO_INITDB_ROOT_PASSWORD=hQ97T9JJKZoqnFn2NXE
     hostname: mongodb
     container_name: mongodb
     depends_on:

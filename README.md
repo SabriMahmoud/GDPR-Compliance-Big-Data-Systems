@@ -1,3 +1,5 @@
+
+
 # GDPR Compliance BigData Systems 
 
 This projects aims at implementing a solution for the European Data Protection Regulation, the research paper **A framework for GDPR compliance in Big Data
@@ -12,18 +14,20 @@ systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** 
 3. [Database Architecture](#database-architecture)
 4. [Technologies Identification](#technologies-identification)
 5. [Project Implementation](#project-implementation)
+6. [Running The First  Module](#running-module-1)
+6. [Running The Second  Module](#running-module-2)
 
 # GDPR Overview
 ## Principles
 
 You can check one of the research documents provided for an explanation of each principle .
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/principles.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/principles.png)
 
 ## Actors 
 You can check one of the research documents provided for an explanation of each actor .
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/actors.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/actors.png)
 
 # Context and Objectives
 
@@ -55,7 +59,7 @@ Let serviceA be one of the mentioned services in the above paragraph
   - **User 3**: The serviceA has a restriction on the customer name; customer last name and the device 
 	 
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/context.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/context.png)
 
 
 
@@ -64,7 +68,7 @@ Now after **storing** the data for authorization, our application services will 
 - **Request**: The service will try to get the required data (user1 in the example) from the database. 
 - **Response**: The response must contain only the authorized data of the required customers.
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/objective.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/objective.png)
 
 ## Objective 
 
@@ -88,7 +92,7 @@ On the other side, the data protection officer will be managing access control t
 Once the token is available, the service can get the required data except the ones restricted by the user.
 
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/architecture.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/architecture.png)
 
 # Database Architecture
 
@@ -113,7 +117,7 @@ For example: if we have **n** services the number of collections will be **n + 1
 
 # Technologies Identification 
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/technologies_id.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/technologies_id.png)
 
 # Project Implementation        
 ## Module 1 
@@ -142,7 +146,7 @@ The Kafka cluster also  durably persists all published records, whether they hav
   - **Consumer:** Kafka Connect 
   
   
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_and_zookeeper.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/kafka_and_zookeeper.png)
   
 #### Zookeeper Quick Overveiw   
 
@@ -165,7 +169,31 @@ ZooKeeper is used in distributed systems for service synchronization and as a na
 
  
 
-# Running The Project
+
+## Module 2 Data Protection Officier 
+
+
+**Admin** : Application admin 
+
+**Clients** : FLASK Services 
+
+**MongoDB** : Application Data Base contains users and Application Data 
+
+
+
+
+
+![alt text](https://mktg-content-api-hashicorp.vercel.app/api/assets?product=tutorials&version=main&asset=public%2Fimg%2Fvault%2Fvault-mongodb.png)
+
+**Note:** when the service access the DB with the provided token the only collection that will be visible is the authorized one which is the View in our case.
+
+
+
+
+
+
+
+# Running Module 1  
 
 * Before proceeding to run any script or command let's first install the requirements by running **requirements_installation.sh** :
 
@@ -182,7 +210,12 @@ cd GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Manage
 To make the project up and running clone the repository and run the **test_rootless.sh** script by typing these commands .
 
 **Note**: 
-   - The script will configure everything from configuration to producing encrypted data 
+   - The script will get our docker containers up and running in the server
+   - Download the MongoDB connect Plugin
+   - Copy the Plugin inside the connect container
+   - Create Kafka topics 
+   - Configure the MongoDB Sink connectors
+   - Produce test data 
 
 ```bash
 ./test_rootless.sh
@@ -211,7 +244,7 @@ docker ps
 ### Database Sink Connector 
 
 #### Configuration 
-Kafka connect configuration is already done inside the script **test_rootless.sh** that you've runned earlier this is how the configuration looks like
+Kafka connect Sink configuration is already done inside the script **test_rootless.sh** that you've runned earlier this is how the configuration looks like
 
 ```java
 {
@@ -220,9 +253,9 @@ Kafka connect configuration is already done inside the script **test_rootless.sh
         "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
         "tasks.max": "1",
         "topics": "events",
-        "connection.uri": "mongodb://mongodb:27017/my_events",
-        "database": "my_events",
-        "collection": "kafka_events",
+        "connection.uri": "mongodb://mongodb:27017/Bankerise",
+        "database": "Bakerise",
+        "collection": "AppUsers",
         "max.num.retries": 5,
         "mongo.errors.tolerance": "all",
         "mongo.errors.log.enable": true,
@@ -234,7 +267,10 @@ Kafka connect configuration is already done inside the script **test_rootless.sh
 
 ```
 
+
 You can clearly see that the connector is confugured as a Sink Connecter by looking to **config** attribute **connector.class**. Here we mentioned one topic which is events and we gave the connector the database **url** and the **collection** to where to transfer.
+
+Same as the policy connecter only the topics and the collection have changed.
 
 #### Data Factory 
 
@@ -250,12 +286,12 @@ python3 producer.py
 As shown in the image below the producer uses Vault API to encrypt data. you can check **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/encrypt_with_vault.py** to see how the encryption process is done. 
 
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/kafka_connect.png) 
 
 
 To verify that data was delivered as planned you can either access MongoDB container or use the MongoDB compass GUI 
 
-***1. **Access MongoDB container**
+**1. Access MongoDB container**
 
 open a new terminal and run this command
 
@@ -272,11 +308,11 @@ mongo
 Inside the mongo shell run these commands 
 
 ```!#/bin/sh
-use my_events
+use Bankerise
 ```
 
 ```!#/bin/sh
-db.kakfa_events.find()
+db.AppUsers.find()
 ```
 
 **2. Use MongoDB compass**
@@ -286,44 +322,159 @@ Now we are happy that we did the job correctly as you can the data was delivered
 
 
 
-## Module 1 Data Protection Officier 
+# Running Module 2
+
+## Build Flask Docker Image
+
+Vault and MongoDB containers are already running in server the final step is to create the Flask docker image and run the container.
+Proceed tro **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/FlaskApi/** and run the **create_flask_image.sh**
+
+```!#/bin/sh
+./create_flask_image.sh
+
+```
+
+## MongoDB  View Creation
 
 
-**Admin** : Application admin 
+To create the view proceed to **/GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/** directory and run the **create_views.py** file 
 
-**Clients** : FLASK Services 
+```!#/bin/sh
+python3 create_views.py
 
-**MongoDB** : Application Data Base contains users and Application Data 
+```
+The view in MongoDB is created by applying this pipeline. You can customise the **create_views.py** as needed since we have severl piplines to perform. 
+
+```python
+	command = [
+	   {
+	      "$lookup":{
+		 "from":"UsersPolicy",
+		 "let":{
+		    "id_u":"$id"
+		 },
+		 "pipeline":[
+		    {
+		       "$match":{
+		          "$expr":{
+		             "$and":[
+		                {
+		                   "$eq":[
+		                      "$id",
+		                      "$$id_u"
+		                   ]
+		                }
+		             ]
+		          }
+		       }
+		    }
+		 ],
+		 "as":"same_id"
+	      }
+	   },
+	   {
+	      "$replaceRoot":{
+		 "newRoot":{
+		    "$mergeObjects":[
+		       {
+		          "$arrayElemAt":[
+		             "$same_id",
+		             0
+		          ]
+		       },
+		       "$$ROOT"
+		    ]
+		 }
+	      }
+	   },
+	   {
+	      "$project":{
+		 "same_id":0
+	      }
+	   },
+	   {
+	      "$project":{
+		 "id":1,
+		 "first_name":{
+		    "$cond":[
+		       {
+		          "$eq":[
+		             "$use_first_name",
+		             1
+		          ]
+		       },
+		       "$first_name",
+		       "$$REMOVE"
+		    ]
+		 },
+		 "last_name":{
+		    "$cond":[
+		       {
+		          "$eq":[
+		             "$use_last_name",
+		             1
+		          ]
+		       },
+		       "$last_name",
+		       "$$REMOVE"
+		    ]
+		 },
+		 "email":{
+		    "$cond":[
+		       {
+		          "$eq":[
+		             "$use_email",
+		             1
+		          ]
+		       },
+		       "$email",
+		       "$$REMOVE"
+		    ]
+		 },
+		 "gender":{
+		    "$cond":[
+		       {
+		          "$eq":[
+		             "$use_gender",
+		             1
+		          ]
+		       },
+		       "$gender",
+		       "$$REMOVE"
+		    ]
+		 },
+		 "ip_address":{
+		    "$cond":[
+		       {
+		          "$eq":[
+		             "$use_ip_address",
+		             1
+		          ]
+		       },
+		       "$ip_address",
+		       "$$REMOVE"
+		    ]
+		 },
+		 "transfert_amount":{
+		    "$cond":[
+		       {
+		          "$eq":[
+		             "$use_transfert_amount",
+		             1
+		          ]
+		       },
+		       "$transfert_amount",
+		       "$$REMOVE"
+		    ]
+		 },
+		 "date":1
+	      }
+	   }
+	]
+```
+
+## Testing Module 2
 
 
 
 
-
-![alt text](https://mktg-content-api-hashicorp.vercel.app/api/assets?product=tutorials&version=main&asset=public%2Fimg%2Fvault%2Fvault-mongodb.png)
-
-**Note:** when the service access the DB with the provided token the only collection that will be visible is the authorized one which is the View in our case.
-
-
-
-### Steps to run Module 2 properly 
-
-
-Before running the Spring Boot Application  there are two steps that you need to perform 
-- **1** : start Vault Docker container using this command 
-
-
-``docker run  --net BigData --name vault1 -d --cap-add=IPC_LOCK
--e 'VAULT_DEV_ROOT_TOKEN_ID=myroot' -e 'VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200' 
--p 8200:8200 vault``
-
-- **2** : start Mongodb container using this command 
-
-``docker run -d -p 0.0.0.0:27017:27017 --name=mongodb -e MONGO_INITDB_ROOT_USERNAME="mdbadmin" -e MONGO_INITDB_ROOT_PASSWORD="hQ97T9JJKZoqnFn2NXE" mongo
-``
-
-**Note** : 
-
-           - For more information about building Vault image  visit the official Docker image on Docker Hub 
-
-           - Specifying the container network is certain to assure the communication between other containers  within the Application 
-   
