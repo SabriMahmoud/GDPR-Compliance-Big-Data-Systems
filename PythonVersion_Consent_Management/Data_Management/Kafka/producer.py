@@ -2,10 +2,10 @@ import json
 import time
 from kafka import KafkaProducer
 import argparse
-from encrypt_with_vault import EncryptionDecryptionUnit
+from encrypt_with_vault import EncryptionUnit
 
 
-EDU = EncryptionDecryptionUnit('http://localhost:8200', token = 'myroot',transit="Test")
+EDU = EncryptionUnit('http://localhost:8200', token = 'myroot',transit="Test")
 EDU.create_key("bankerise_key")
 EDU.encryptData("bankerise_key","hello")
 ciphertext= EDU.ciphertext

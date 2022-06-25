@@ -52,7 +52,9 @@ def getUsers(service_name):
 """***************************************************"""
 
 def connectToDataBase(serviceName):
+      # Retrieving token from vault based on the service name 
       serviceUserName,servicePassword = vault.retrieveCredentials(serviceName)
+      # Initializing application database
       DB_URI = "mongodb://"+ serviceUserName + ":" +servicePassword + "@mongodb:27017/" + database_name
       app.config["MONGODB_HOST"] = DB_URI
       database.init_app(app)      
@@ -87,13 +89,15 @@ def getUserById(service_name,user_id):
 
 def decrypt_with_vault(user):
 
-    # Add try except
-    DU = DecryptionUnit(vault.client,'Test')
+    try :
+        DU = DecryptionUnit(vault.client,'Test')
 
-    for key,value in user.items():
-        if key != "user_id" and key!="coll_id" and key !="date" and not isinstance(value, type(None)):
-            DU.decryptData(key_name="bankerise_key",ciphertext=value)
-            user[key] = DU.decrypted_plaintext
+        for key,value in user.items():
+            if key != "user_id" and key!="coll_id" and key !="date" and not isinstance(value, type(None)):
+                DU.decryptData(key_name="bankerise_key",ciphertext=value)
+                user[key] = DU.decrypted_plaintext
+    except Exception as e :
+        print(e,flush=True)
     return user
 
 

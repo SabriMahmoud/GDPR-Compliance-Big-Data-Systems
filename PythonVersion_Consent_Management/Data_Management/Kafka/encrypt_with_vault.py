@@ -2,13 +2,17 @@ import base64
 import sys
 import hvac
 
-class EncryptionDecryptionUnit :
+class EncryptionUnit :
     def __init__(self , url , token,transit) :
         self.client = hvac.Client(url = url , token = token )
         self.decrypted_plaintext = ""
         self.ciphertext = ""
         self.transit = transit
         self.mount_transit_engine()
+
+    ########################################################
+    ########################################################
+    ########################################################
 
     def base64ify(self,bytes_or_str):
         
@@ -22,6 +26,13 @@ class EncryptionDecryptionUnit :
 
         return output_bytes.decode('ascii')
 
+    ########################################################
+    ########################################################
+    ########################################################
+
+
+    # This will enable the transit secret engine with name = self.transit
+
     def mount_transit_engine(self):
         try:
             self.client.write("sys/mounts/"+self.transit,type = "transit")
@@ -30,6 +41,7 @@ class EncryptionDecryptionUnit :
 
 
     def create_key(self,key_name) :
+        
         # #  POST: /{mount_point}/keys/{key_name}. Produces: 204 (empty body) 
 
         self.client.write(path =self.transit+"/keys/"+key_name)

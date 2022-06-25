@@ -5,7 +5,9 @@ try :
     bankerise_db = client['Bankerise']
 
 
-
+    """*********** Preparing the View pipline *************"""
+    """***************************************************"""
+    """***************************************************"""
 
 
     command = [
@@ -53,6 +55,7 @@ try :
                 }
             ]
     try:
+        # Creating the view on the AppUsers using the pipeline defined previously 
         bankerise_db.command({
                 "create":"UsersView",
                 "viewOn":"AppUsers",
@@ -60,8 +63,15 @@ try :
                 )
     except Exception as e :
         print(e)
+
+    """********* Creating a Role for The Service **********"""
+    """***************************************************"""
+    """***************************************************"""
+
+    
     roleName="myServices"
     try:
+        # Creating a role for the service to be able to see only the View when connecting to the database 
         bankerise_db.command("createRole",roleName,privileges=[{ "resource": { "db": "Bankerise", "collection": "UsersView" }, "actions": [ "find"] }],roles=[{ "role": "read", "db": "Bankerise" } ])
     except Exception as e :
         print(e)
