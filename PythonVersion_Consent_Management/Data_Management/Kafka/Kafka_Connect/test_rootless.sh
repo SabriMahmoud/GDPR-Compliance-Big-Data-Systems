@@ -43,6 +43,8 @@ echo "Creating kafka topics........."
 
 echo "================================================="
 
+python3 ../manage_database.py
+
 python3 ../create_kafka_topics.py -t events-events.deadletter -p 3-3
 
 sleep 10 
