@@ -22,12 +22,12 @@ systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** 
 
 You can check one of the research documents provided for an explanation of each principle .
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/principles.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/principles.png)
 
 ## Actors 
 You can check one of the research documents provided for an explanation of each actor .
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/actors.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/actors.png)
 
 # Context and Objectives
 
@@ -59,7 +59,7 @@ Let serviceA be one of the mentioned services in the above paragraph
   - **User 3**: The serviceA has a restriction on the customer name; customer last name and the device 
 	 
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/context.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/context.png)
 
 
 
@@ -68,7 +68,7 @@ Now after **storing** the data for authorization, our application services will 
 - **Request**: The service will try to get the required data (user1 in the example) from the database. 
 - **Response**: The response must contain only the authorized data of the required customers.
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/objective.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/objective.png)
 
 ## Objective 
 
@@ -92,7 +92,7 @@ On the other side, the data protection officer will be managing access control t
 Once the token is available, the service can get the required data except the ones restricted by the user.
 
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/architecture.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/architecture.png)
 
 # Database Architecture
 
@@ -117,7 +117,7 @@ For example: if we have **n** services the number of collections will be **n + 1
 
 # Technologies Identification 
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/technologies_id.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/technologies_id.png)
 
 # Project Implementation        
 ## Module 1 
@@ -146,7 +146,7 @@ The Kafka cluster also  durably persists all published records, whether they hav
   - **Consumer:** Kafka Connect 
   
   
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_and_zookeeper.png)
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/kafka_and_zookeeper.png)
   
 #### Zookeeper Quick Overveiw   
 
@@ -244,7 +244,7 @@ docker ps
 ### Database Sink Connector 
 
 #### Configuration 
-Kafka connect configuration is already done inside the script **test_rootless.sh** that you've runned earlier this is how the configuration looks like
+Kafka connect Sink configuration is already done inside the script **test_rootless.sh** that you've runned earlier this is how the configuration looks like
 
 ```java
 {
@@ -267,7 +267,10 @@ Kafka connect configuration is already done inside the script **test_rootless.sh
 
 ```
 
+
 You can clearly see that the connector is confugured as a Sink Connecter by looking to **config** attribute **connector.class**. Here we mentioned one topic which is events and we gave the connector the database **url** and the **collection** to where to transfer.
+
+Same as the policy connecter only the topics and the collection have changed.
 
 #### Data Factory 
 
@@ -283,7 +286,7 @@ python3 producer.py
 As shown in the image below the producer uses Vault API to encrypt data. you can check **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/encrypt_with_vault.py** to see how the encryption process is done. 
 
 
-![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
+![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/kafka_connect.png) 
 
 
 To verify that data was delivered as planned you can either access MongoDB container or use the MongoDB compass GUI 
@@ -333,139 +336,145 @@ Proceed tro **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/
 
 ## MongoDB  View Creation
 
-``
+
+To create the view proceed to **/GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/** directory and run the **create_views.py** file 
+
+```!#/bin/sh
+python3 create_views.py
+
+```
+The view in MongoDB is created by applying this pipeline. You can customise the **create_views.py** as needed since we have severl piplines to perform. 
+
 ```python
-command = [
-   {
-      "$lookup":{
-         "from":"UsersPolicy",
-         "let":{
-            "id_u":"$id"
-         },
-         "pipeline":[
-            {
-               "$match":{
-                  "$expr":{
-                     "$and":[
-                        {
-                           "$eq":[
-                              "$id",
-                              "$$id_u"
-                           ]
-                        }
-                     ]
-                  }
-               }
-            }
-         ],
-         "as":"same_id"
-      }
-   },
-   {
-      "$replaceRoot":{
-         "newRoot":{
-            "$mergeObjects":[
-               {
-                  "$arrayElemAt":[
-                     "$same_id",
-                     0
-                  ]
-               },
-               "$$ROOT"
-            ]
-         }
-      }
-   },
-   {
-      "$project":{
-         "same_id":0
-      }
-   },
-   {
-      "$project":{
-         "id":1,
-         "first_name":{
-            "$cond":[
-               {
-                  "$eq":[
-                     "$use_first_name",
-                     1
-                  ]
-               },
-               "$first_name",
-               "$$REMOVE"
-            ]
-         },
-         "last_name":{
-            "$cond":[
-               {
-                  "$eq":[
-                     "$use_last_name",
-                     1
-                  ]
-               },
-               "$last_name",
-               "$$REMOVE"
-            ]
-         },
-         "email":{
-            "$cond":[
-               {
-                  "$eq":[
-                     "$use_email",
-                     1
-                  ]
-               },
-               "$email",
-               "$$REMOVE"
-            ]
-         },
-         "gender":{
-            "$cond":[
-               {
-                  "$eq":[
-                     "$use_gender",
-                     1
-                  ]
-               },
-               "$gender",
-               "$$REMOVE"
-            ]
-         },
-         "ip_address":{
-            "$cond":[
-               {
-                  "$eq":[
-                     "$use_ip_address",
-                     1
-                  ]
-               },
-               "$ip_address",
-               "$$REMOVE"
-            ]
-         },
-         "transfert_amount":{
-            "$cond":[
-               {
-                  "$eq":[
-                     "$use_transfert_amount",
-                     1
-                  ]
-               },
-               "$transfert_amount",
-               "$$REMOVE"
-            ]
-         },
-         "date":1
-      }
-   }
-]
+	command = [
+	   {
+	      "$lookup":{
+		 "from":"UsersPolicy",
+		 "let":{
+		    "id_u":"$id"
+		 },
+		 "pipeline":[
+		    {
+		       "$match":{
+		          "$expr":{
+		             "$and":[
+		                {
+		                   "$eq":[
+		                      "$id",
+		                      "$$id_u"
+		                   ]
+		                }
+		             ]
+		          }
+		       }
+		    }
+		 ],
+		 "as":"same_id"
+	      }
+	   },
+	   {
+	      "$replaceRoot":{
+		 "newRoot":{
+		    "$mergeObjects":[
+		       {
+		          "$arrayElemAt":[
+		             "$same_id",
+		             0
+		          ]
+		       },
+		       "$$ROOT"
+		    ]
+		 }
+	      }
+	   },
+	   {
+	      "$project":{
+		 "same_id":0
+	      }
+	   },
+	   {
+	      "$project":{
+		 "id":1,
+		 "first_name":{
+		    "$cond":[
+		       {
+		          "$eq":[
+		             "$use_first_name",
+		             1
+		          ]
+		       },
+		       "$first_name",
+		       "$$REMOVE"
+		    ]
+		 },
+		 "last_name":{
+		    "$cond":[
+		       {
+		          "$eq":[
+		             "$use_last_name",
+		             1
+		          ]
+		       },
+		       "$last_name",
+		       "$$REMOVE"
+		    ]
+		 },
+		 "email":{
+		    "$cond":[
+		       {
+		          "$eq":[
+		             "$use_email",
+		             1
+		          ]
+		       },
+		       "$email",
+		       "$$REMOVE"
+		    ]
+		 },
+		 "gender":{
+		    "$cond":[
+		       {
+		          "$eq":[
+		             "$use_gender",
+		             1
+		          ]
+		       },
+		       "$gender",
+		       "$$REMOVE"
+		    ]
+		 },
+		 "ip_address":{
+		    "$cond":[
+		       {
+		          "$eq":[
+		             "$use_ip_address",
+		             1
+		          ]
+		       },
+		       "$ip_address",
+		       "$$REMOVE"
+		    ]
+		 },
+		 "transfert_amount":{
+		    "$cond":[
+		       {
+		          "$eq":[
+		             "$use_transfert_amount",
+		             1
+		          ]
+		       },
+		       "$transfert_amount",
+		       "$$REMOVE"
+		    ]
+		 },
+		 "date":1
+	      }
+	   }
+	]
 ```
 
+## Testing Module 2
 
-**Note** : 
 
-           - For more information about building Vault image  visit the official Docker image on Docker Hub 
 
-           - Specifying the container network is certain to assure the communication between other containers  within the Application 
-   
+

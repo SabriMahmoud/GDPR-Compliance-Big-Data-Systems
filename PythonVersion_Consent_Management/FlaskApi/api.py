@@ -52,7 +52,7 @@ def getUsers(service_name):
 
 def connectToDataBase(serviceName):
       serviceUserName,servicePassword = vault.retrieveCredentials(serviceName)
-      DB_URI = "mongodb://"+ serviceUserName + ":" +servicePassword + "@mongodb3:27017/" + database_name
+      DB_URI = "mongodb://"+ serviceUserName + ":" +servicePassword + "@mongodb:27017/" + database_name
       app.config["MONGODB_HOST"] = DB_URI
       database.init_app(app)      
 
@@ -70,7 +70,7 @@ def getUserById(service_name,user_id):
             except ValueError as e :
                 print(e,flush=True)
             for user in UsersView.objects: 
-                if user.id == user_id :
+                if user.id == int(user_id) :
                     parsed_user = parse_json(user.to_json())
                     return make_response(jsonify(parsed_user),200)
             return make_response(jsonify(parsed_user),404)

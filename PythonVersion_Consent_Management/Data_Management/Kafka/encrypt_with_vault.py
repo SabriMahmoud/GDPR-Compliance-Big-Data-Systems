@@ -63,25 +63,3 @@ class EncryptionDecryptionUnit :
 
 
 
-# client = hvac.Client(url = 'http://localhost:8200', token = 'myroot')
-# try :
-#     client.write("sys/mounts/titii",type = "transit")
-# except Exception as e:
-#     print(e)
-
-    
-
-# #  POST: /{mount_point}/keys/{key_name}. Produces: 204 (empty body) 
-# client.write(path="titii/keys/my-key")
-
-
-# encrypt_data_response = client.secrets.transit.encrypt_data(
-#     name='my-key',
-#     plaintext=base64ify('hi its me hvac'.encode()),
-#     mount_point = "titii"
-# )
-# ciphertext = encrypt_data_response['data']['ciphertext']
-# print('Encrypted plaintext ciphertext is: {cipher}'.format(cipher=ciphertext))
-
-
-

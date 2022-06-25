@@ -6,13 +6,15 @@ database = MongoEngine()
 
 class UsersView(database.Document) :
     _id = database.ObjectIdField()
-    id = database.StringField()
+    id = database.IntField()
     first_name = database.StringField()
     last_name = database.StringField()
     email =database.StringField()
     gender = database.StringField()
     ip_address = database.StringField()
     meta = {'collection': 'UsersView'}
+    transfert_amount=database.IntField()
+    date = database.StringField()
 
     def to_json(self):
         return {
@@ -21,6 +23,8 @@ class UsersView(database.Document) :
             "first name" : self.first_name,
             "email" : self.email,
             "gender" : self.gender,
-            "ip adress" : self.ip_address
+            "ip adress" : self.ip_address,
+            "transfert_amount":self.transfert_amount,
+            "date":self.date
         }
 

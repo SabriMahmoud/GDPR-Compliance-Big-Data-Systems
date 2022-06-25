@@ -3,7 +3,7 @@ class Credentials:
     name = "Bankerise"
     plugin_name = "mongodb-database-plugin"
     allowed_roles = '*'
-    connection_url = "mongodb://{{username}}:{{password}}@mongodb3:27017/admin?tls=false"
+    connection_url = "mongodb://{{username}}:{{password}}@mongodb:27017/admin?tls=false"
     username = "mdbadmin" 
     password = "hQ97T9JJKZoqnFn2NXE"
 
