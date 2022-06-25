@@ -22,12 +22,12 @@ systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** 
 
 You can check one of the research documents provided for an explanation of each principle .
 
-![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/principles.png)
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/principles.png)
 
 ## Actors 
 You can check one of the research documents provided for an explanation of each actor .
 
-![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/actors.png)
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/actors.png)
 
 # Context and Objectives
 
@@ -59,7 +59,7 @@ Let serviceA be one of the mentioned services in the above paragraph
   - **User 3**: The serviceA has a restriction on the customer name; customer last name and the device 
 	 
 
-![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/context.png)
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/context.png)
 
 
 
@@ -68,7 +68,7 @@ Now after **storing** the data for authorization, our application services will 
 - **Request**: The service will try to get the required data (user1 in the example) from the database. 
 - **Response**: The response must contain only the authorized data of the required customers.
 
-![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/objective.png)
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/objective.png)
 
 ## Objective 
 
@@ -92,7 +92,7 @@ On the other side, the data protection officer will be managing access control t
 Once the token is available, the service can get the required data except the ones restricted by the user.
 
 
-![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/architecture.png)
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/architecture.png)
 
 # Database Architecture
 
@@ -117,7 +117,7 @@ For example: if we have **n** services the number of collections will be **n + 1
 
 # Technologies Identification 
 
-![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/technologies_id.png)
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/technologies_id.png)
 
 # Project Implementation        
 ## Module 1 
@@ -146,7 +146,7 @@ The Kafka cluster also  durably persists all published records, whether they hav
   - **Consumer:** Kafka Connect 
   
   
-![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/kafka_and_zookeeper.png)
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_and_zookeeper.png)
   
 #### Zookeeper Quick Overveiw   
 
@@ -286,7 +286,7 @@ python3 producer.py
 As shown in the image below the producer uses Vault API to encrypt data. you can check **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/encrypt_with_vault.py** to see how the encryption process is done. 
 
 
-![alt text](https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems/tree/main/Documents/kafka_connect.png) 
+![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
 
 
 To verify that data was delivered as planned you can either access MongoDB container or use the MongoDB compass GUI 
@@ -337,7 +337,7 @@ Proceed tro **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/
 ## MongoDB  View Creation
 
 
-To create the view proceed to **/GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/Data_Management/Kafka/** directory and run the **create_views.py** file 
+To create the view proceed to **** directory and run the **create_views.py** file 
 
 ```!#/bin/sh
 python3 create_views.py
@@ -472,9 +472,5 @@ The view in MongoDB is created by applying this pipeline. You can customise the 
 	   }
 	]
 ```
-
-## Testing Module 2
-
-
 
 
