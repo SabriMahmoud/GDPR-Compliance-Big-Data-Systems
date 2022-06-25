@@ -13,7 +13,7 @@ class UsersView(database.Document) :
     gender = database.StringField()
     ip_address = database.StringField()
     meta = {'collection': 'UsersView'}
-    transfert_amount=database.IntField()
+    transfert_amount=database.StringField()
     date = database.StringField()
 
     def to_json(self):

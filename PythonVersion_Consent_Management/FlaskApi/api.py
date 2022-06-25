@@ -8,6 +8,7 @@ from model.User import UsersView
 import sys
 sys.path.append('../Api')
 from vault_security.vault_configuration import VaultConfiguration
+from vault_security.DecryptionUnit import DecryptionUnit
 
 
 """*************** Global variables *******************"""
@@ -71,12 +72,31 @@ def getUserById(service_name,user_id):
                 print(e,flush=True)
             for user in UsersView.objects: 
                 if user.id == int(user_id) :
-                    parsed_user = parse_json(user.to_json())
+                    user = decrypt_with_vault(user.to_json())
+                    parsed_user = parse_json(user)
                     return make_response(jsonify(parsed_user),200)
             return make_response(jsonify(parsed_user),404)
         except hvac.exceptions.InvalidRequest as e :
             print(e, flush=True)
             return "unknown service name : " + service_name 
+
+
+"""***************************************************"""
+"""***************************************************"""
+"""***************************************************"""
+
+def decrypt_with_vault(user):
+
+    # Add try except
+    DU = DecryptionUnit(vault.client,'Test')
+
+    for key,value in user.items():
+        if key != "user_id" and key!="coll_id" and key !="date" and not isinstance(value, type(None)):
+            DU.decryptData(key_name="bankerise_key",ciphertext=value)
+            user[key] = DU.decrypted_plaintext
+    return user
+
+
 
 
 """***************************************************"""
