@@ -248,19 +248,19 @@ Kafka connect Sink configuration is already done inside the script **test_rootle
 
 ```java
 {
-    "name": "mongo-sink-connector",
+    "name": "mongo-sink-policy-connector",
     "config": {
         "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
         "tasks.max": "1",
-        "topics": "events",
-        "connection.uri": "mongodb://mongodb:27017/Bankerise",
-        "database": "Bakerise",
-        "collection": "AppUsers",
+        "topics": "policyevents",
+        "connection.uri": "mongodb://mdbadmin:hQ97T9JJKZoqnFn2NXE@mongodb:27017/admin?tls=false",
+        "database": "Bankerise",
+        "collection": "UsersPolicy",
         "max.num.retries": 5,
         "mongo.errors.tolerance": "all",
         "mongo.errors.log.enable": true,
         "errors.log.include.messages": true,
-        "errors.deadletterqueue.topic.name": "events.deadletter",
+        "errors.deadletterqueue.topic.name": "policyevents.deadletter",
         "errors.deadletterqueue.context.headers.enable": true 
     }
 }
@@ -289,7 +289,7 @@ As shown in the image below the producer uses Vault API to encrypt data. you can
 ![alt text](https://github.com/SabriMahmoud/GDPR_Compliance_BigData_Systems/blob/development/Documents/kafka_connect.png) 
 
 
-To verify that data was delivered as planned you can either access MongoDB container or use the MongoDB compass GUI 
+To verify that data was delivered as planned you can either access MongoDB container or use the MongoDB compass GUI.
 
 **1. Access MongoDB container**
 
@@ -320,6 +320,22 @@ you can follow this link on how to install MongoDB compass : [Installation](http
 
 Now we are happy that we did the job correctly as you can the data was delivered securly encrypted with vault, we can move on tho the second module.
 
+The result will look like this for the user id=1   
+
+```python
+{
+   "_id":{
+      "$oid":"62b6eb1727a00961febb829a"
+   },
+   "id":1,
+   "date":"4/23/2022",
+   "first_name":"vault:v1:L/4VjQOi88yzuSaW//16ZH6U+FJDSXzbvrNnaA5UfUSYrw==",
+   "last_name":"vault:v1:Q1jZihGqfXDHCpqTSb01L+L0naXVyV7albvqjNPojc4VvgI37iY=",
+   "email":"vault:v1:/LJ13Mo8ljxas/jezUkvXt4Ur1CVwILPQma4ZkuUrK4uZQW5czGlWIdfNz+0+ORVCdVdfzbg",
+   "transfert_amount":"vault:v1:N5ZRGjUOvFbqZVswWXrXcJN/hUuktzWFdRzgCaiOpg=="
+}
+
+```
 
 
 # Running Module 2
@@ -337,13 +353,8 @@ Proceed tro **GDPR-Compliance-Big-Data-Systems/PythonVersion_Consent_Management/
 ## MongoDB  View Creation
 
 
-To create the view proceed to **** directory and run the **create_views.py** file 
-
-```!#/bin/sh
-python3 create_views.py
-
-```
-The view in MongoDB is created by applying this pipeline. You can customise the **create_views.py** as needed since we have severl piplines to perform. 
+The view is already created within the script **test_rootless.sh** the script calls the file **manage_database.py** to perform all required actions.
+ 
 
 ```python
 	command = [
@@ -471,6 +482,23 @@ The view in MongoDB is created by applying this pipeline. You can customise the 
 	      }
 	   }
 	]
+```
+
+## Testing Module 2 
+You can check for results in the browser open http://localhost:5000 where the Data protection Officer is listening and ask for data.
+
+Example:
+- To get the user with a specific  id for a specific service  
+```!#/bin/sh
+http://localhost:5000/<service_name>/users/<id>
+
+```
+
+The existing service name is **myServices** and id range is from 1 to 1000 try this one :
+
+```!#/bin/sh
+http://localhost:5000/myServices/users/1
+
 ```
 
 
