@@ -5,17 +5,28 @@
 This projects aims at implementing a solution for the European Data Protection Regulation, the research paper **A framework for GDPR compliance in Big Data
 systems** made by **Mouna Rhahla**, **Sahar Allegue** and **Takoua Abdellatif** in **Proxym-Lab** Refer to Documents directory for more information.
 
-**SUPERVISER :** **Tarek Sghair**
+**PROJECT SUPERVISER :** **Takoua Abdellatif**
+
+**MODULE 2 SUPERVISOR:** **Tarek Sghir**
+
+You can find the project source code on : <a href="https://github.com/SabriMahmoud/GDPR-Compliance-Big-Data-Systems" target="_blank">GitHub</a>
+
+
+You can reach me on :<a href="https://www.linkedin.com/in/sabri-mahmoud-a30b101b7/" target="_blank">Linked In</a>
+
+
+I'll be pleased to explain any unclear information.
 
 # Table of Contents
 
-1. [Context And Objectives](#context-and-objectives)  
-2. [Project Architecture](#project-architecture)
-3. [Database Architecture](#database-architecture)
-4. [Technologies Identification](#technologies-identification)
-5. [Project Implementation](#project-implementation)
-6. [Running The First  Module](#running-module-1)
-6. [Running The Second  Module](#running-module-2)
+1. [GDPR Overview](#gdpr-overview)  
+2. [Context And Objectives](#context-and-objectives)  
+3. [Project Architecture](#project-architecture)
+4. [Database Architecture](#database-architecture)
+6. [Technologies Identification](#technologies-identification)
+6. [Project Implementation](#project-implementation)
+7. [Running The First  Module](#running-module-1)
+8. [Running The Second  Module](#running-module-2)
 
 # GDPR Overview
 ## Principles
@@ -244,7 +255,7 @@ docker ps
 ### Database Sink Connector 
 
 #### Configuration 
-Kafka connect Sink configuration is already done inside the script **test_rootless.sh** that you've runned earlier this is how the configuration looks like
+Kafka connect Sink configuration is already done inside the script **test_rootless.sh** that you've runned earlier this is how the configuration looks like.
 
 ```java
 {
@@ -266,11 +277,12 @@ Kafka connect Sink configuration is already done inside the script **test_rootle
 }
 
 ```
-
+**Note** : 
+   - I have configured two connector, one for the policy and the other for the application logs and both are consuming from two different kafka topics.
 
 You can clearly see that the connector is confugured as a Sink Connecter by looking to **config** attribute **connector.class**. Here we mentioned one topic which is events and we gave the connector the database **url** and the **collection** to where to transfer.
 
-Same as the policy connecter only the topics and the collection have changed.
+Same as the application connecter only the topics and the collection have changed.
 
 #### Data Factory 
 
@@ -320,7 +332,7 @@ you can follow this link on how to install MongoDB compass : [Installation](http
 
 Now we are happy that we did the job correctly as you can the data was delivered securly encrypted with vault, we can move on tho the second module.
 
-The result will look like this for the user id=1   
+- The result will look like this for the user **id=1** 
 
 ```python
 {
@@ -494,7 +506,7 @@ http://localhost:5000/<service_name>/users/<id>
 
 ```
 
-The existing service name is **myServices** and id range is from 1 to 1000 try this one :
+The existing service name is **myServices** and the **id** range is from 1 to 1000 try this one :
 
 ```!#/bin/sh
 http://localhost:5000/myServices/users/1
